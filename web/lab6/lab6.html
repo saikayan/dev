@@ -12,3 +12,282 @@ III.To split the given string into various substrings
  ii. Write a JavaScript that inputs the date of birth from the user
  dynamically and display the current age of the user in the following
  format : ( ----Years, ----Months, ----Days).
+
+
+ <!DOCTYPE html>
+<html>
+<head>
+    <title>JavaScript Lab Exercise 4</title>
+</head>
+<body>
+
+<h2>JavaScript Lab Exercise 4</h2>
+
+<!-- You can call functions manually from console 
+     OR attach buttons later if required -->
+
+<script src="script.js"></script>
+
+</body>
+</html>
+
+// =====================================================
+// =============== PART II ==============================
+// =====================================================
+
+// =====================================================
+// 4.a PART II - STRING OPERATIONS
+// =====================================================
+
+// I. Last Occurrence of Substring
+function lastOccurrence(str, sub) {
+    return str.lastIndexOf(sub);
+}
+
+// Without method
+function lastOccurrenceManual(str, sub) {
+    let pos = -1;
+    for (let i = 0; i <= str.length - sub.length; i++) {
+        if (str.substring(i, i + sub.length) === sub) {
+            pos = i;
+        }
+    }
+    return pos;
+}
+
+// II. Extract Substring
+function extractSubstring(str, start, end) {
+    return str.substring(start, end);
+}
+
+// III. Split String
+function splitString(str) {
+    return str.split(" ");
+}
+
+
+// =====================================================
+// 4.b PART II
+// =====================================================
+
+// i. 7 days before and after
+function displayDateInfo() {
+    let today = new Date();
+
+    let before = new Date(today);
+    before.setDate(today.getDate() - 7);
+
+    let after = new Date(today);
+    after.setDate(today.getDate() + 7);
+
+    console.log("7 Days Before:", before);
+    console.log("7 Days After:", after);
+}
+
+// ii. Age Calculator
+function calculateAge(dobString) {
+    let dob = new Date(dobString);
+    let today = new Date();
+
+    let years = today.getFullYear() - dob.getFullYear();
+    let months = today.getMonth() - dob.getMonth();
+    let days = today.getDate() - dob.getDate();
+
+    if (days < 0) {
+        months--;
+        days += 30;
+    }
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    return years + " Years, " + months + " Months, " + days + " Days";
+}
+
+
+// =====================================================
+// 4.c PART II - BINARY SEARCH
+// =====================================================
+
+function binarySearch(arr, key) {
+    let low = 0;
+    let high = arr.length - 1;
+
+    while (low <= high) {
+        let mid = Math.floor((low + high) / 2);
+
+        if (arr[mid] == key) {
+            return "FOUND at Index " + mid;
+        }
+        else if (arr[mid] < key) {
+            low = mid + 1;
+        }
+        else {
+            high = mid - 1;
+        }
+    }
+    return "NOT FOUND";
+}
+
+
+// =====================================================
+// 4.d PART II - SORT STRINGS & FILTER E
+// =====================================================
+
+function sortStringsAndFilter(arr) {
+    arr.sort();
+    let eStrings = arr.filter(str => str[0].toLowerCase() === 'e');
+
+    console.log("Sorted Strings:", arr);
+    console.log("Strings starting with E:", eStrings);
+}
+
+
+// =====================================================
+// 4.e PART II - WORD LENGTH COUNT
+// =====================================================
+
+function wordLengthCount(text) {
+    let words = text.replace(/[^a-zA-Z ]/g, "").split(" ");
+    let count = {};
+
+    words.forEach(word => {
+        let len = word.length;
+        if (len > 0) {
+            count[len] = (count[len] || 0) + 1;
+        }
+    });
+
+    console.table(count);
+}
+
+
+
+// =====================================================
+// =============== PART III ============================
+// =====================================================
+
+// =====================================================
+// 4.a PART III - STRING OPERATIONS
+// =====================================================
+
+// I. First Occurrence
+function firstOccurrence(str, sub) {
+    return str.indexOf(sub);
+}
+
+// Manual
+function firstOccurrenceManual(str, sub) {
+    for (let i = 0; i <= str.length - sub.length; i++) {
+        if (str.substring(i, i + sub.length) === sub) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+// II. Character at index
+function charAtIndex(str, index) {
+    return str.charAt(index);
+}
+
+// Manual
+function charAtIndexManual(str, index) {
+    return str[index];
+}
+
+// III. Concatenate Strings
+function concatenateStrings(str1, str2) {
+    return str1.concat(str2);
+}
+
+// Manual
+function concatenateManual(str1, str2) {
+    return str1 + str2;
+}
+
+
+// =====================================================
+// 4.b PART III - UPPER & LOWER CASE
+// =====================================================
+
+function convertCase(text) {
+    return {
+        upper: text.toUpperCase(),
+        lower: text.toLowerCase()
+    };
+}
+
+
+// =====================================================
+// 4.c PART III - THREE LETTER WORDS
+// =====================================================
+
+function threeLetterWords(word) {
+    let result = [];
+
+    for (let i = 0; i < word.length; i++) {
+        for (let j = 0; j < word.length; j++) {
+            for (let k = 0; k < word.length; k++) {
+                if (i !== j && j !== k && i !== k) {
+                    result.push(word[i] + word[j] + word[k]);
+                }
+            }
+        }
+    }
+
+    return [...new Set(result)];
+}
+
+
+// =====================================================
+// 4.d PART III - GREETING BASED ON TIME
+// =====================================================
+
+function timeGreeting() {
+    let now = new Date();
+    let hour = now.getHours();
+
+    if (hour >= 5 && hour < 12)
+        return "Good Morning";
+    else if (hour >= 12 && hour < 17)
+        return "Good Afternoon";
+    else if (hour >= 17 && hour < 21)
+        return "Good Evening";
+    else
+        return "Good Night";
+}
+
+
+// =====================================================
+// 4.e PART III - MERGE SORT
+// =====================================================
+
+function mergeSort(arr) {
+    if (arr.length <= 1)
+        return arr;
+
+    let mid = Math.floor(arr.length / 2);
+    let left = mergeSort(arr.slice(0, mid));
+    let right = mergeSort(arr.slice(mid));
+
+    return merge(left, right);
+}
+
+function merge(left, right) {
+    let result = [];
+    let i = 0, j = 0;
+
+    while (i < left.length && j < right.length) {
+        if (left[i] < right[j]) {
+            result.push(left[i]);
+            i++;
+        } else {
+            result.push(right[j]);
+            j++;
+        }
+    }
+
+    return result.concat(left.slice(i)).concat(right.slice(j));
+}
