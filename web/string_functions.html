@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>String Functions Demo</title>
+</head>
+<body>
+
+<h2>JavaScript String Functions</h2>
+
+<p id="concatResult"></p>
+<p id="charAtResult"></p>
+<p id="substringResult"></p>
+<p id="lengthResult"></p>
+<p id="upperResult"></p>
+<p id="lowerResult"></p>
+<p id="indexOfResult"></p>
+<p id="includesResult"></p>
+<p id="replaceResult"></p>
+<p id="trimResult"></p>
+<p id="sliceResult"></p>
+
+<script>
+    // 1. concat
+    let str1 = "Hello";
+    let str2 = "World";
+    let resultConcat = str1.concat(" ", str2);
+    document.getElementById("concatResult").innerHTML =
+        "Concat Result: " + resultConcat;
+
+    // 2. charAt
+    let text = "JavaScript";
+    let resultCharAt = text.charAt(4);
+    document.getElementById("charAtResult").innerHTML =
+        "charAt Result (index 4): " + resultCharAt;
+
+    // 3. substring
+    let str = "Programming";
+    let resultSubstring = str.substring(0, 6);
+    document.getElementById("substringResult").innerHTML =
+        "Substring Result (0 to 6): " + resultSubstring;
+
+    // 4. length
+    let text2 = "Hello World";
+    let resultLength = text2.length;
+    document.getElementById("lengthResult").innerHTML =
+        "Length Result: " + resultLength;
+
+    // 5. toUpperCase
+    let text3 = "hello";
+    let resultUpper = text3.toUpperCase();
+    document.getElementById("upperResult").innerHTML =
+        "Uppercase Result: " + resultUpper;
+
+    // 6. toLowerCase
+    let text4 = "HELLO";
+    let resultLower = text4.toLowerCase();
+    document.getElementById("lowerResult").innerHTML =
+        "Lowercase Result: " + resultLower;
+
+    // 7. indexOf
+    let text5 = "JavaScript";
+    let resultIndex = text5.indexOf("Script");
+    document.getElementById("indexOfResult").innerHTML =
+        "indexOf Result: " + resultIndex;
+
+    // 8. includes
+    let text6 = "JavaScript is fun";
+    let resultIncludes = text6.includes("fun");
+    document.getElementById("includesResult").innerHTML =
+        "Includes Result: " + resultIncludes;
+
+    // 9. replace
+    let text7 = "I like Java";
+    let resultReplace = text7.replace("Java", "JavaScript");
+    document.getElementById("replaceResult").innerHTML =
+        "Replace Result: " + resultReplace;
+
+    // 10. trim
+    let text8 = "   Hello World   ";
+    let resultTrim = text8.trim();
+    document.getElementById("trimResult").innerHTML =
+        "Trim Result: '" + resultTrim + "'";
+
+    // 11. slice
+    let text9 = "Programming";
+    let resultSlice = text9.slice(3, 8);
+    document.getElementById("sliceResult").innerHTML =
+        "Slice Result (3 to 8): " + resultSlice;
+
+</script>
+
+</body>
+</html>
