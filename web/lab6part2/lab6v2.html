@@ -1,0 +1,263 @@
+Got it — you want **complete basic HTML + JavaScript for every program**, clearly separated and ready to run. Here you go:
+
+---
+
+# ✅ **4.a – String Manipulation (With & Without Methods)**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>String Operations</title>
+</head>
+<body>
+
+<h2>String Manipulation</h2>
+
+<script>
+let str = "Hello JavaScript World";
+let sub = "JavaScript";
+
+// WITH METHODS
+document.write("<h3>Using String Methods</h3>");
+document.write("First occurrence: " + str.indexOf(sub) + "<br>");
+document.write("Character at index 6: " + str.charAt(6) + "<br>");
+document.write("Concatenation: " + str.concat(" Programming") + "<br><br>");
+
+// WITHOUT METHODS
+
+// I. Search substring
+function findSubstring(main, sub) {
+    for (let i = 0; i <= main.length - sub.length; i++) {
+        let found = true;
+        for (let j = 0; j < sub.length; j++) {
+            if (main[i + j] !== sub[j]) {
+                found = false;
+                break;
+            }
+        }
+        if (found) return i;
+    }
+    return -1;
+}
+
+// II. Character at index
+function charAtIndex(s, index) {
+    return s[index];
+}
+
+// III. Concatenation
+function concatStrings(a, b) {
+    let result = "";
+    for (let i = 0; i < a.length; i++) result += a[i];
+    for (let i = 0; i < b.length; i++) result += b[i];
+    return result;
+}
+
+document.write("<h3>Without String Methods</h3>");
+document.write("First occurrence: " + findSubstring(str, sub) + "<br>");
+document.write("Character at index 6: " + charAtIndex(str, 6) + "<br>");
+document.write("Concatenation: " + concatStrings("Hello", " World"));
+
+</script>
+
+</body>
+</html>
+```
+
+---
+
+# ✅ **4.b – XHTML Form (Uppercase & Lowercase)**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Case Converter</title>
+    <script>
+        function convertText() {
+            let text = document.getElementById("inputText").value;
+            document.getElementById("upper").innerHTML = text.toUpperCase();
+            document.getElementById("lower").innerHTML = text.toLowerCase();
+        }
+    </script>
+</head>
+<body>
+
+<h2>Text Converter</h2>
+
+<form>
+    Enter Text:
+    <input type="text" id="inputText">
+    <br><br>
+    <input type="button" value="Convert" onclick="convertText()">
+</form>
+
+<p>Uppercase: <span id="upper"></span></p>
+<p>Lowercase: <span id="lower"></span></p>
+
+</body>
+</html>
+```
+
+---
+
+# ✅ **4.c – 3-Letter Words from 5-Letter Word**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>3-Letter Words Generator</title>
+</head>
+<body>
+
+<h2>Generate 3-Letter Words</h2>
+
+<button onclick="generate()">Enter Word</button>
+
+<p id="output"></p>
+
+<script>
+function generate() {
+    let word = prompt("Enter a 5-letter word:");
+    let result = [];
+
+    for (let i = 0; i < word.length; i++) {
+        for (let j = 0; j < word.length; j++) {
+            for (let k = 0; k < word.length; k++) {
+                if (i !== j && j !== k && i !== k) {
+                    result.push(word[i] + word[j] + word[k]);
+                }
+            }
+        }
+    }
+
+    document.getElementById("output").innerHTML = result.join(", ");
+}
+</script>
+
+</body>
+</html>
+```
+
+---
+
+# ✅ **4.d – Time-based Greeting**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Greeting Message</title>
+</head>
+<body>
+
+<h2>Current Time Greeting</h2>
+
+<button onclick="showGreeting()">Show Greeting</button>
+
+<p id="time"></p>
+<p id="message"></p>
+
+<script>
+function showGreeting() {
+    let now = new Date();
+    let hour = now.getHours();
+    let message = "";
+
+    if (hour >= 5 && hour < 12) {
+        message = "Good Morning";
+    } else if (hour >= 12 && hour < 17) {
+        message = "Good Afternoon";
+    } else if (hour >= 17 && hour < 21) {
+        message = "Good Evening";
+    } else {
+        message = "Good Night";
+    }
+
+    document.getElementById("time").innerHTML =
+        "Current Time: " + now.toLocaleTimeString();
+
+    document.getElementById("message").innerHTML = message;
+}
+</script>
+
+</body>
+</html>
+```
+
+---
+
+# ✅ **4.e – Merge Sort (User Input)**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Merge Sort</title>
+</head>
+<body>
+
+<h2>Merge Sort Program</h2>
+
+<button onclick="sortNumbers()">Enter Numbers</button>
+
+<p id="result"></p>
+
+<script>
+
+// Merge function
+function merge(left, right) {
+    let result = [];
+    let i = 0, j = 0;
+
+    while (i < left.length && j < right.length) {
+        if (left[i] < right[j]) {
+            result.push(left[i]);
+            i++;
+        } else {
+            result.push(right[j]);
+            j++;
+        }
+    }
+
+    return result.concat(left.slice(i)).concat(right.slice(j));
+}
+
+// Merge Sort
+function mergeSort(arr) {
+    if (arr.length <= 1) return arr;
+
+    let mid = Math.floor(arr.length / 2);
+    let left = arr.slice(0, mid);
+    let right = arr.slice(mid);
+
+    return merge(mergeSort(left), mergeSort(right));
+}
+
+// Input and output
+function sortNumbers() {
+    let input = prompt("Enter numbers separated by commas:");
+    let arr = input.split(",").map(Number);
+
+    let sorted = mergeSort(arr);
+
+    document.getElementById("result").innerHTML =
+        "Sorted Array: " + sorted.join(", ");
+}
+</script>
+
+</body>
+</html>
+```
+
+---
+
+# 💡 If you want next:
+
+* Short **exam-only versions (just JS logic)**
+* Or **viva questions + answers for these programs**
+* Or **step-by-step explanation for each program**
+
+Just tell me 👍

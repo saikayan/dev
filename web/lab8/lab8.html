@@ -1,0 +1,271 @@
+Below are complete working JavaScript programs for each question separately (a–g). Each example includes HTML + JavaScript so you can run them directly in a browser.
+
+a) Recursive sum of an array without using loops
+<!DOCTYPE html>
+<html>
+<head>
+<title>Recursive Array Sum</title>
+</head>
+<body>
+
+<h2>Sum of Array using Recursion (No Loops)</h2>
+<button onclick="calculate()">Find Sum</button>
+
+<script>
+function sumArray(arr, index = 0) {
+    if (index === arr.length)
+        return 0;
+    return arr[index] + sumArray(arr, index + 1);
+}
+
+function calculate() {
+    let numbers = [10, 20, 30, 40, 50];
+    let result = sumArray(numbers);
+    alert("Sum = " + result);
+}
+</script>
+
+</body>
+</html>
+b) Divide and Conquer Recursive Array Sum
+<!DOCTYPE html>
+<html>
+<head>
+<title>Divide and Conquer Sum</title>
+</head>
+<body>
+
+<h2>Divide and Conquer Array Sum</h2>
+<button onclick="calculate()">Find Sum</button>
+
+<script>
+function divideSum(arr, left, right) {
+
+    if (left == right)
+        return arr[left];
+
+    let mid = Math.floor((left + right) / 2);
+
+    return divideSum(arr, left, mid) +
+           divideSum(arr, mid + 1, right);
+}
+
+function calculate() {
+    let arr = [5, 10, 15, 20, 25];
+    let result = divideSum(arr, 0, arr.length - 1);
+    alert("Sum = " + result);
+}
+</script>
+
+</body>
+</html>
+c) Check whether a string is a palindrome using recursion
+<!DOCTYPE html>
+<html>
+<head>
+<title>Palindrome Check</title>
+</head>
+<body>
+
+<h2>Palindrome Check using Recursion</h2>
+
+<input type="text" id="text">
+<button onclick="check()">Check</button>
+
+<script>
+function isPalindrome(str, start, end) {
+
+    if (start >= end)
+        return true;
+
+    if (str[start] != str[end])
+        return false;
+
+    return isPalindrome(str, start + 1, end - 1);
+}
+
+function check() {
+    let text = document.getElementById("text").value;
+    let result = isPalindrome(text, 0, text.length - 1);
+
+    if (result)
+        alert("Palindrome");
+    else
+        alert("Not a Palindrome");
+}
+</script>
+
+</body>
+</html>
+d) Convert Binary to Decimal using Recursion
+<!DOCTYPE html>
+<html>
+<head>
+<title>Binary to Decimal</title>
+</head>
+<body>
+
+<h2>Binary to Decimal using Recursion</h2>
+
+<input type="text" id="binary">
+<button onclick="convert()">Convert</button>
+
+<script>
+function binaryToDecimal(bin) {
+
+    if (bin == 0)
+        return 0;
+
+    return (bin % 10) + 2 * binaryToDecimal(Math.floor(bin / 10));
+}
+
+function convert() {
+    let binary = parseInt(document.getElementById("binary").value);
+    let result = binaryToDecimal(binary);
+    alert("Decimal = " + result);
+}
+</script>
+
+</body>
+</html>
+e) Reverse Binary of Integer and return Decimal value
+<!DOCTYPE html>
+<html>
+<head>
+<title>Reverse Binary</title>
+</head>
+<body>
+
+<h2>Reverse Binary Representation</h2>
+
+<input type="number" id="num">
+<button onclick="process()">Reverse</button>
+
+<script>
+function reverseBinary(n) {
+
+    let binary = n.toString(2);
+
+    let reversed = binary.split("").reverse().join("");
+
+    return parseInt(reversed, 2);
+}
+
+function process() {
+
+    let num = parseInt(document.getElementById("num").value);
+
+    let result = reverseBinary(num);
+
+    alert("Decimal of Reversed Binary = " + result);
+}
+</script>
+
+</body>
+</html>
+Example
+Input: 13 → Binary 1101 → Reverse 1011 → Decimal 11
+
+f) Binary Search using Recursion
+<!DOCTYPE html>
+<html>
+<head>
+<title>Binary Search</title>
+</head>
+<body>
+
+<h2>Binary Search using Recursion</h2>
+
+<input type="number" id="key" placeholder="Enter number to search">
+<button onclick="search()">Search</button>
+
+<script>
+
+function binarySearch(arr, left, right, key) {
+
+    if (left > right)
+        return -1;
+
+    let mid = Math.floor((left + right) / 2);
+
+    if (arr[mid] == key)
+        return mid;
+
+    if (key < arr[mid])
+        return binarySearch(arr, left, mid - 1, key);
+
+    return binarySearch(arr, mid + 1, right, key);
+}
+
+function search() {
+
+    let arr = [10,20,30,40,50,60,70];
+
+    let key = parseInt(document.getElementById("key").value);
+
+    let result = binarySearch(arr, 0, arr.length - 1, key);
+
+    if (result == -1)
+        alert("Element not found");
+    else
+        alert("Element found at index " + result);
+}
+
+</script>
+
+</body>
+</html>
+g) Remove items from dropdown and count items
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dropdown Remove</title>
+</head>
+<body>
+
+<h2>Dropdown List Example</h2>
+
+<select id="myList">
+<option>Apple</option>
+<option>Mango</option>
+<option>Orange</option>
+<option>Banana</option>
+<option>Grapes</option>
+</select>
+
+<br><br>
+
+<button onclick="removeItem()">Remove Selected</button>
+<button onclick="countItems()">Count Items</button>
+
+<script>
+
+function removeItem() {
+
+    let list = document.getElementById("myList");
+
+    list.remove(list.selectedIndex);
+}
+
+function countItems() {
+
+    let list = document.getElementById("myList");
+
+    let count = list.options.length;
+
+    alert("Total items in dropdown = " + count);
+}
+
+</script>
+
+</body>
+</html>
+✅ These programs are fully working lab programs suitable for Web Technology / JavaScript practicals.
+
+If you want, I can also give you:
+
+Shorter exam-ready versions (10–15 lines each)
+
+Output screenshots format for record submission
+
+Viva questions & answers for this experiment.

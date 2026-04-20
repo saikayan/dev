@@ -1,0 +1,764 @@
+Here is the complete working DHTML code for each question separately.
+
+✅ 6.a. Move Text Randomly with Dynamic Color and Font Size
+<!DOCTYPE html>
+<html>
+<head>
+<title>Random Moving Text</title>
+<style>
+#myText {
+    position: absolute;
+    font-weight: bold;
+}
+</style>
+<script>
+function moveText() {
+    var text = document.getElementById("myText");
+
+    var maxX = window.innerWidth - 200;
+    var maxY = window.innerHeight - 100;
+
+    var x = Math.floor(Math.random() * maxX);
+    var y = Math.floor(Math.random() * maxY);
+
+    var colors = ["red", "blue", "green", "purple", "orange", "brown"];
+    var randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+    var randomSize = Math.floor(Math.random() * 40) + 10;
+
+    text.style.left = x + "px";
+    text.style.top = y + "px";
+    text.style.color = randomColor;
+    text.style.fontSize = randomSize + "px";
+}
+
+setInterval(moveText, 1000);
+</script>
+</head>
+<body>
+
+<div id="myText">Dynamic Moving Text</div>
+
+</body>
+</html>
+✅ 6.b. Mouse Movement – Display Element Name and (X,Y) Coordinates
+<!DOCTYPE html>
+<html>
+<head>
+<title>Mouse Coordinates</title>
+<style>
+#info {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-color: lightyellow;
+    padding: 10px;
+    border: 1px solid black;
+}
+</style>
+<script>
+function showDetails(event) {
+    var elementName = event.target.tagName;
+    var x = event.clientX;
+    var y = event.clientY;
+
+    document.getElementById("info").innerHTML =
+        "Element: " + elementName + "<br>X: " + x + " Y: " + y;
+}
+</script>
+</head>
+
+<body onmousemove="showDetails(event)">
+
+<div id="info">Move mouse anywhere...</div>
+
+<img src="https://via.placeholder.com/200" alt="Sample Image">
+
+<p>This is a sample paragraph.</p>
+
+</body>
+</html>
+✅ 6.c. Change Image on Mouse Over and Mouse Out
+<!DOCTYPE html>
+<html>
+<head>
+<title>Image Change on Mouse Events</title>
+<script>
+function loadImage1() {
+    document.getElementById("myImage").src =
+        "https://via.placeholder.com/300/ff0000";
+}
+
+function loadImage2() {
+    document.getElementById("myImage").src =
+        "https://via.placeholder.com/300/0000ff";
+}
+</script>
+</head>
+
+<body onmouseover="loadImage1()" onmouseout="loadImage2()">
+
+<h2>Move Mouse Inside and Outside Page</h2>
+
+<img id="myImage" src="https://via.placeholder.com/300/0000ff">
+
+</body>
+</html>
+✅ 6.d. Display All XHTML Elements Using all and child Collections
+<!DOCTYPE html>
+<html>
+<head>
+<title>Display All Elements</title>
+<script>
+function showElements() {
+    var output = "";
+
+    // Using document.all collection
+    output += "<h3>Using document.all:</h3>";
+    for (var i = 0; i < document.all.length; i++) {
+        output += document.all[i].tagName + "<br>";
+    }
+
+    // Using childNodes collection
+    output += "<h3>Using childNodes:</h3>";
+    function listChildren(node) {
+        if (node.nodeType === 1) {
+            output += node.tagName + "<br>";
+        }
+        for (var i = 0; i < node.childNodes.length; i++) {
+            listChildren(node.childNodes[i]);
+        }
+    }
+    listChildren(document.documentElement);
+
+    document.getElementById("result").innerHTML = output;
+}
+</script>
+</head>
+
+<body onload="showElements()">
+
+<h1>Sample Page</h1>
+<p>This is a paragraph.</p>
+<div>A sample div element.</div>
+
+<div id="result"></div>
+
+</body>
+</html>
+✅ 6.e. Click Event with SHIFT and CTRL Detection
+<!DOCTYPE html>
+<html>
+<head>
+<title>Click Event Handling</title>
+<script>
+function handleClick(event) {
+
+    if (event.shiftKey) {
+        alert("Event Name: " + event.type);
+    }
+    else if (event.ctrlKey) {
+        alert("Element Name: " + event.target.tagName);
+    }
+    else {
+        alert("Page was clicked!");
+    }
+}
+</script>
+</head>
+
+<body onclick="handleClick(event)">
+
+<h2>Click Anywhere on the Page</h2>
+<p>Hold SHIFT while clicking to see event name.</p>
+<p>Hold CTRL while clicking to see element name.</p>
+
+</body>
+</html>
+If you want, I can also provide:
+
+📄 Viva questions & answers
+
+📘 Short explanation for record submission
+
+🎯 Output screenshots description
+
+🧾 Combined single file version
+
+Just tell me 😊
+
+
+
+
+
+
+
+Here is the complete working DHTML code for Ex.No.5 – Part II, each program given separately.
+
+✅ 6.a Two Horizontal Frames – Click Image to Display in Lower Frame
+🔹 index.html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Horizontal Frames</title>
+</head>
+
+<frameset rows="50%,50%">
+    <frame src="top.html" name="topFrame">
+    <frame src="bottom.html" name="bottomFrame">
+</frameset>
+
+</html>
+🔹 top.html
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+function showImage(src) {
+    parent.bottomFrame.document.getElementById("display").src = src;
+}
+</script>
+</head>
+<body align="center">
+
+<h3>Click any image</h3>
+
+<img src="https://via.placeholder.com/150/ff0000"
+     onclick="showImage(this.src)">
+
+<img src="https://via.placeholder.com/150/00ff00"
+     onclick="showImage(this.src)">
+
+<img src="https://via.placeholder.com/150/0000ff"
+     onclick="showImage(this.src)">
+
+</body>
+</html>
+🔹 bottom.html
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+function clearImage() {
+    document.getElementById("display").src = "";
+}
+</script>
+</head>
+<body align="center">
+
+<h3>Selected Image</h3>
+<img id="display" width="200" onclick="clearImage()">
+
+</body>
+</html>
+✅ 6.b Two Vertical Frames – Departmental Store
+🔹 index.html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Vertical Frames</title>
+</head>
+
+<frameset cols="40%,60%">
+    <frame src="left.html" name="leftFrame">
+    <frame src="right.html" name="rightFrame">
+</frameset>
+
+</html>
+🔹 left.html
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+var items = {
+    "Rice": {price: 50, img:"https://via.placeholder.com/200?text=Rice"},
+    "Sugar": {price: 40, img:"https://via.placeholder.com/200?text=Sugar"},
+    "Oil": {price: 120, img:"https://via.placeholder.com/200?text=Oil"}
+};
+
+function showItem() {
+    var list = document.getElementById("itemList");
+    var selected = list.value;
+
+    parent.rightFrame.document.getElementById("itemImg").src =
+        items[selected].img;
+
+    alert("Price of " + selected + " is Rs." + items[selected].price);
+}
+</script>
+</head>
+
+<body>
+<h3>Departmental Store</h3>
+
+<select id="itemList" onchange="showItem()">
+    <option value="Rice">Rice</option>
+    <option value="Sugar">Sugar</option>
+    <option value="Oil">Oil</option>
+</select>
+
+</body>
+</html>
+🔹 right.html
+<!DOCTYPE html>
+<html>
+<body align="center">
+<h3>Selected Item</h3>
+<img id="itemImg" width="250">
+</body>
+</html>
+✅ 6.c Game of 15 (4x4 Puzzle)
+<!DOCTYPE html>
+<html>
+<head>
+<title>Game of 15</title>
+<style>
+table { border-collapse: collapse; }
+td {
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    font-size: 20px;
+    border: 1px solid black;
+    cursor: pointer;
+}
+</style>
+
+<script>
+var emptyRow = 3;
+var emptyCol = 3;
+
+function init() {
+    var numbers = [];
+    for (var i = 1; i <= 15; i++) numbers.push(i);
+    numbers.sort(() => Math.random() - 0.5);
+    numbers.push("");
+
+    var k = 0;
+    for (var r = 0; r < 4; r++) {
+        for (var c = 0; c < 4; c++) {
+            var cell = document.getElementById("cell"+r+c);
+            cell.innerHTML = numbers[k];
+            if (numbers[k] === "") {
+                emptyRow = r;
+                emptyCol = c;
+            }
+            k++;
+        }
+    }
+}
+
+function move(r,c) {
+    if ((Math.abs(r-emptyRow) == 1 && c == emptyCol) ||
+        (Math.abs(c-emptyCol) == 1 && r == emptyRow)) {
+
+        document.getElementById("cell"+emptyRow+emptyCol).innerHTML =
+        document.getElementById("cell"+r+c).innerHTML;
+
+        document.getElementById("cell"+r+c).innerHTML = "";
+
+        emptyRow = r;
+        emptyCol = c;
+    }
+}
+</script>
+</head>
+
+<body onload="init()">
+
+<h3>Game of 15</h3>
+<table>
+<script>
+for (var r=0; r<4; r++) {
+    document.write("<tr>");
+    for (var c=0; c<4; c++) {
+        document.write("<td id='cell"+r+c+"' onclick='move("+r+","+c+")'></td>");
+    }
+    document.write("</tr>");
+}
+</script>
+</table>
+
+</body>
+</html>
+✅ 6.d Image Divided into 16 Pieces (15 Puzzle Style)
+<!DOCTYPE html>
+<html>
+<head>
+<title>Image Puzzle</title>
+<style>
+td {
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    background-image: url("https://via.placeholder.com/400");
+    background-size: 400px 400px;
+}
+</style>
+
+<script>
+function init() {
+    var positions = [];
+    for (var i=0; i<15; i++) positions.push(i);
+    positions.sort(() => Math.random() - 0.5);
+
+    for (var i=0; i<15; i++) {
+        var row = Math.floor(i/4);
+        var col = i%4;
+        var cell = document.getElementById("cell"+row+col);
+
+        var pos = positions[i];
+        var x = -(pos%4)*100;
+        var y = -Math.floor(pos/4)*100;
+
+        cell.style.backgroundPosition = x+"px "+y+"px";
+    }
+}
+</script>
+</head>
+
+<body onload="init()">
+
+<h3>Image Puzzle</h3>
+<table>
+<script>
+for (var r=0; r<4; r++) {
+    document.write("<tr>");
+    for (var c=0; c<4; c++) {
+        document.write("<td id='cell"+r+c+"'></td>");
+    }
+    document.write("</tr>");
+}
+</script>
+</table>
+
+</body>
+</html>
+✅ 6.e Event Bubbling Example
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+function imageClick(event) {
+    alert("You clicked the image");
+    event.cancelBubble = true;
+}
+
+function tableClick(event) {
+    alert("You clicked the table");
+    event.cancelBubble = true;
+}
+</script>
+</head>
+
+<body>
+
+<h3>Event Bubbling Demo</h3>
+
+<img src="https://via.placeholder.com/200"
+     onclick="imageClick(event)">
+
+<br><br>
+
+<table border="1" onclick="tableClick(event)">
+<tr>
+<td>Click this table</td>
+</tr>
+</table>
+
+</body>
+</html>
+✅ 6.f Image Filters (Flip, Transparency, Negative, Gray, X-Ray)
+⚠️ These are old IE-only filters (for academic DHTML experiments).
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Image Filters</title>
+<script>
+function flipH() {
+    img.style.filter = "FlipH";
+}
+function flipV() {
+    img.style.filter = "FlipV";
+}
+function chroma() {
+    img.style.filter = "Chroma(color=white)";
+}
+function invert() {
+    img.style.filter = "Invert";
+}
+function gray() {
+    img.style.filter = "Gray";
+}
+function xray() {
+    img.style.filter = "Xray";
+}
+</script>
+</head>
+
+<body>
+
+<h3>DHTML Filters</h3>
+
+<img id="img" src="https://via.placeholder.com/300">
+
+<br><br>
+
+<button onclick="flipH()">Flip Horizontal</button>
+<button onclick="flipV()">Flip Vertical</button>
+<button onclick="chroma()">Transparency</button>
+<button onclick="invert()">Negative</button>
+<button onclick="gray()">Gray Scale</button>
+<button onclick="xray()">X-Ray</button>
+
+</body>
+</html>
+If you want:
+
+📄 Viva questions & answers
+
+📘 Record observation & result
+
+🎯 Modern HTML5 version (without frames)
+
+🖼 Screenshot explanation
+
+Tell me 👍
+
+
+
+
+
+Here are commonly asked viva questions on DHTML (Dynamic HTML) along with clear answers. These are frequently asked in lab exams and practical viva.
+
+✅ PART A – Basic DHTML Questions
+1. What is DHTML?
+Answer:
+DHTML (Dynamic HTML) is a combination of HTML, CSS, JavaScript, and DOM used to create dynamic and interactive web pages without reloading the page.
+
+2. What are the components of DHTML?
+Answer:
+DHTML consists of:
+
+HTML – Structure of the web page
+
+CSS – Styling
+
+JavaScript – Client-side scripting
+
+DOM (Document Object Model) – Interface to manipulate elements dynamically
+
+3. What is the difference between HTML and DHTML?
+Answer:
+
+HTML	DHTML
+Static web pages	Dynamic web pages
+Content does not change automatically	Content changes without reloading
+No scripting required	Uses JavaScript
+4. What is DOM?
+Answer:
+DOM (Document Object Model) is a programming interface that allows JavaScript to access and modify HTML elements dynamically.
+
+5. What is meant by dynamic web page?
+Answer:
+A dynamic web page is a page whose content changes automatically based on user actions, events, or scripts without reloading.
+
+✅ PART B – Event Handling Questions
+6. What is an event in DHTML?
+Answer:
+An event is an action performed by the user or browser such as:
+
+click
+
+mouseover
+
+keypress
+
+load
+
+7. What is event handling?
+Answer:
+Event handling is the process of writing JavaScript code that responds to user actions.
+
+Example:
+
+<button onclick="alert('Hello')">Click</button>
+8. What is event bubbling?
+Answer:
+Event bubbling is the process where an event starts from the target element and propagates upward to parent elements.
+
+9. What is the difference between event bubbling and capturing?
+Answer:
+
+Bubbling → Event flows from child to parent
+
+Capturing → Event flows from parent to child
+
+10. How do you detect SHIFT or CTRL key during a click?
+Answer:
+Using:
+
+event.shiftKey
+event.ctrlKey
+✅ PART C – Frames & Images
+11. What is a frame?
+Answer:
+A frame divides the browser window into multiple sections where each section loads a separate HTML page.
+
+12. What is a frameset?
+Answer:
+<frameset> tag defines how frames are divided (rows or columns).
+
+Example:
+
+<frameset rows="50%,50%">
+13. How do you access one frame from another?
+Answer:
+Using:
+
+parent.frameName.document
+14. How do you change an image dynamically?
+Answer:
+
+document.getElementById("img").src = "newimage.jpg";
+✅ PART D – Collections & DOM
+15. What is document.all?
+Answer:
+document.all is a collection of all elements in a document (mainly used in older IE browsers).
+
+16. What are childNodes?
+Answer:
+childNodes returns all child elements of a parent node.
+
+17. What is getElementById()?
+Answer:
+It is a DOM method used to access a specific HTML element by its ID.
+
+✅ PART E – Game of 15 & Puzzle Related
+18. What logic is used in Game of 15?
+Answer:
+
+4×4 grid
+
+One empty cell
+
+Tile moves only if adjacent to empty cell
+
+Swap positions using onclick event
+
+19. How do you check if two cells are adjacent?
+Answer:
+Using:
+
+Math.abs(row1 - row2) == 1
+OR
+Math.abs(col1 - col2) == 1
+✅ PART F – Filters & Effects
+20. What are DHTML Filters?
+Answer:
+Filters are visual effects applied to elements (mostly supported in old Internet Explorer).
+
+Examples:
+
+FlipH
+
+FlipV
+
+Gray
+
+Invert
+
+Xray
+
+21. What is FlipH and FlipV?
+Answer:
+
+FlipH → Horizontal flip
+
+FlipV → Vertical flip
+
+22. What is Gray filter?
+Answer:
+It converts image into grayscale.
+
+23. What is Invert filter?
+Answer:
+It produces a negative image effect.
+
+✅ PART G – Advanced Viva Questions
+24. What are advantages of DHTML?
+Answer:
+
+Faster interaction
+
+No page reload
+
+Better user experience
+
+Dynamic content manipulation
+
+25. What are limitations of DHTML?
+Answer:
+
+Browser compatibility issues
+
+Security restrictions
+
+Depends on JavaScript
+
+26. What is the difference between innerHTML and innerText?
+Answer:
+
+innerHTML → Includes HTML tags
+
+innerText → Only text content
+
+27. What is setInterval()?
+Answer:
+It executes a function repeatedly after a specified time interval.
+
+Example:
+
+setInterval(moveText, 1000);
+28. What is setTimeout()?
+Answer:
+Executes a function once after a delay.
+
+29. What is the difference between client-side and server-side scripting?
+Answer:
+
+Client-side → Runs in browser (JavaScript)
+
+Server-side → Runs on server (PHP, JSP, ASP)
+
+30. Why is DHTML called Dynamic?
+Answer:
+Because it allows the web page content, style, and structure to change dynamically after loading.
+
+✅ Important Lab Viva Tip Questions (Frequently Asked)
+Why do we use onclick event?
+
+What is the purpose of random() function?
+
+How do you swap two values in JavaScript?
+
+What is the use of Math.floor()?
+
+Why do we use position:absolute in moving text program?
+
+What is the purpose of window.innerWidth?
+
+If you want, I can also give:
+
+🎯 2-mark short answers format
+
+📘 16-mark theory questions
+
+🧾 Important repeated university questions
+
+🗣️ Viva rapid-fire one-line answers
+
+📄 Printable PDF version
+
+Tell me which format you need 😊

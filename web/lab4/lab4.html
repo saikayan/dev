@@ -1,0 +1,817 @@
+
+a)
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+ 
+  <!-- Define the bank element -->
+  <xs:element name="bank">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="accounts" type="accountsType"/>
+        <xs:element name="customers" type="customersType"/>
+        <xs:element name="customer_accounts" type="customerAccountsType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+ 
+  <!-- Define the accountsType complex type -->
+  <xs:complexType name="accountsType">
+    <xs:sequence>
+      <xs:element name="savings_accounts" type="savingsAccountsType"/>
+      <xs:element name="checking_accounts" type="checkingAccountsType"/>
+    </xs:sequence>
+  </xs:complexType>
+ 
+  <!-- Define the savingsAccountsType complex type -->
+  <xs:complexType name="savingsAccountsType">
+    <xs:sequence>
+      <xs:element name="savings_account" type="savingsAccountType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+ 
+  <!-- Define the savingsAccountType complex type -->
+  <xs:complexType name="savingsAccountType">
+    <xs:sequence>
+      <xs:element name="balance" type="xs:decimal"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="interest" type="xs:decimal"/>
+  </xs:complexType>
+ 
+  <!-- Define the checkingAccountsType complex type -->
+  <xs:complexType name="checkingAccountsType">
+    <xs:sequence>
+      <xs:element name="checking_account" type="checkingAccountType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+ 
+  <!-- Define the checkingAccountType complex type -->
+  <xs:complexType name="checkingAccountType">
+    <xs:sequence>
+      <xs:element name="balance" type="xs:decimal"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+  </xs:complexType>
+ 
+  <!-- Define the customersType complex type -->
+  <xs:complexType name="customersType">
+    <xs:sequence>
+      <xs:element name="customer" type="customerType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+ 
+  <!-- Define the customerType complex type -->
+  <xs:complexType name="customerType">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="address" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+  </xs:complexType>
+ 
+  <!-- Define the customerAccountsType complex type -->
+  <xs:complexType name="customerAccountsType">
+    <xs:sequence>
+      <xs:element name="customer_account" type="customerAccountType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+ 
+  <!-- Define the customerAccountType complex type -->
+  <xs:complexType name="customerAccountType">
+    <xs:attribute name="c_id" type="xs:string"/>
+    <xs:attribute name="ac_id" type="xs:string"/>
+  </xs:complexType>
+ 
+</xs:schema>
+ 
+ 
+ 
+Given the following DTD, Generate the corresponding XML document. Also write the XML schema for 
+that document.   
+<!ELEMENT bib (book*)> 
+<!ELEMENT book (title, (author+ | editor+ ), publisher, price)> 
+<!ATTLIST book year CDATA #REQUIRED > 
+<!ELEMENT author (last, first)> 
+<!ELEMENT editor (last, first, affiliation)> 
+<!ELEMENT title (#PCDATA)> <!ELEMENT last (#PCDATA)> 
+<!ELEMENT first (#PCDATA)> <!ELEMENT affiliation (#PCDATA)> 
+<!ELEMENT publisher (#PCDATA)> <!ELEMENT price (#PCDATA)>
+
+
+
+
+b)
+
+
+ 
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Books SYSTEM "b.dtd">
+ 
+ 
+<Books>
+  <Book>
+    <Isbn>0 – 8447 – 768</Isbn>
+    <Title>XML in a Nutshell</Title>
+    <Author>Harold, Elliotte Rusty</Author>
+  </Book>
+  <Book>
+    <Isbn>978 – 81 – 317 – 6235 – 6</Isbn>
+    <Title>Service – Oriented Architecture</Title>
+    <Author>Thomas Erl</Author>
+  </Book>
+  <Book>
+    <Isbn>978 – 81 – 317 – 1869 – 8</Isbn>
+    <Title>XML and WebServices</Title>
+    <Author>Ron Schmelzer</Author>
+  </Book>
+</Books>
+
+
+
+
+
+
+ 
+  <!ELEMENT Books (Book+)>
+  <!ELEMENT Book (Isbn, Title, Author)>
+  <!ELEMENT Isbn (#PCDATA)>
+  <!ELEMENT Title (#PCDATA)>
+  <!ELEMENT Author (#PCDATA)>
+  <!ATTLIST Book id ID #IMPLIED>
+ 
+ 
+ 
+ 
+   Write the DTD for the following XML document. 
+<pets> 
+<pet> 
+<name>Tilly</name> 
+<age>14</age> 
+<type>cat</type> 
+<color>silver</color> 
+</pet> 
+<pet> 
+<name>Amanda</name> 
+<age>10</age> 
+<type>dog</type> 
+<color>brown</color> 
+</pet> 
+<pet> 
+<name>Jack</name> 
+<age>3</age> 
+<type>cat</type> 
+<color>black</color> 
+</pet> 
+<pet> 
+<name>Blake</name> 
+<age>12</age> 
+<type>dog</type> 
+<color>blue</color> 
+</pet> 
+<pet> 
+<name>Loosey</name> 
+<age>1</age> 
+<type>cat</type> 
+<color>brown</color> 
+</pet> 
+<pet> 
+<name>Stop</name> 
+<age>5</age> 
+<type>pig</type> 
+<color>brown</color> 
+</pet> 
+</pets> 
+ 
+ 
+c)
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <xsl:template match="/">
+    <html>
+      <head>
+        <title>Students</title>
+      </head>
+      <body>
+        <table border="1">
+          <tr>
+            <th>Name</th>
+            <th>Roll No</th>
+            <th>Department</th>
+            <th>CGPA</th>
+          </tr>
+          <xsl:for-each select="Students/Student">
+            <tr>
+              <td><xsl:value-of select="name"/></td>
+              <td><xsl:value-of select="rollno"/></td>
+              <td><xsl:value-of select="department"/></td>
+              <td><xsl:value-of select="cgpa"/></td>
+            </tr>
+          </xsl:for-each>
+        </table>
+      </body>
+    </html>
+  </xsl:template>
+</xsl:stylesheet>
+
+ 
+d)
+ 
+<Employee>
+<Emp>
+<name>Roshan</name>
+<eid>E101</eid>
+<department>HR</department>
+<doj>09-SEP-1999</doj>
+<salary>68,000</salary>
+</Emp>
+<Emp>
+<name>Mary</name>
+<eid>E233</eid>
+<department>Accounts</department>
+<doj>06-AUG-2001</doj>
+<salary>24,000</salary>
+</Emp>
+<Emp>
+<name>Sunil</name>
+<eid>E521</eid>
+<department>Engineering</department>
+<doj>04-NOV-2009</doj>
+<salary>42,000</salary>
+</Emp>
+</Employee>
+ 
+ 
+<!ELEMENT Employee (Emp+)>
+<!ELEMENT Emp (name, eid, department, doj, salary)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT eid (#PCDATA)>
+<!ELEMENT department (#PCDATA)>
+<!ELEMENT doj (#PCDATA)>
+<!ELEMENT salary (#PCDATA)>
+ 
+Write the DTD and XML Schema for the following XML document. 
+<bank> 
+</bank> 
+<account account-number=“A-101” branch-name=“Downtown” 
+balance=“500”> 
+</account> 
+<account account-number=“A-102” branch-name=“Perryridge” 
+balance=“400”> 
+</account> 
+<account account-number=“A-201” branch-name=“Brighton” 
+balance=“900”> 
+</account> 
+<customer customer-name=“Johnson” customer-street=“Alma” 
+customer-city=“Palo Alto”> 
+</customer> 
+<customer customer-name=“Hayes” customer-street=“Main” 
+customer-city=“Harrison”> 
+</customer> 
+<depositor account-number=“A-101” customer-name=“Johnson”> 
+</depositor> 
+<depositor account-number=“A-201” customer-name=“Johnson”> 
+</depositor> 
+<depositor account-number=“A-102” customer-name=“Hayes”> 
+</depositor> 
+ 
+ 
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+ 
+  <xs:element name="Employee">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Emp" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="name" type="xs:string"/>
+              <xs:element name="eid" type="xs:string"/>
+              <xs:element name="department" type="xs:string"/>
+              <xs:element name="doj" type="xs:string"/>
+              <xs:element name="salary" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+ 
+</xs:schema>
+
+
+
+
+e)
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+ 
+  <xsl:template match="/">
+    <html>
+      <head>
+        <title>Books Information</title>
+        <style>
+          table {
+            border-collapse: collapse;
+            width: 100%;
+          }
+          th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+          }
+          th {
+            background-color: #f2f2f2;
+          }
+        </style>
+      </head>
+      <body>
+        <h2>Books Information</h2>
+        <table>
+          <tr>
+            <th>ISBN</th>
+            <th>Title</th>
+            <th>Author</th>
+          </tr>
+          <xsl:apply-templates select="Books/Book"/>
+        </table>
+      </body>
+    </html>
+  </xsl:template>
+ 
+  <xsl:template match="Book">
+    <tr>
+      <td><xsl:value-of select="Isbn"/></td>
+      <td><xsl:value-of select="Title"/></td>
+      <td><xsl:value-of select="Author"/></td>
+    </tr>
+  </xsl:template>
+ 
+</xsl:stylesheet>
+
+
+
+
+part 2
+
+
+
+
+
+a)
+
+
+
+a.xml
+
+
+
+<bib>
+<!-- please change the data -->
+<book year="2022">
+<title>Book Title</title>
+<author>
+<last>Last Name</last>
+<first>First Name</first>
+</author>
+<publisher>Publisher Name</publisher>
+<price>19.99</price>
+</book>
+<book year="2023">
+<title>Another Book Title</title>
+<editor>
+<last>Last Name</last>
+<first>First Name</first>
+<affiliation>Affiliation</affiliation>
+</editor>
+<publisher>Another Publisher Name</publisher>
+<price>24.99</price>
+</book>
+</bib>
+ 
+a.dtd
+ 
+ 
+<!ELEMENT bib (book*)>
+<!ELEMENT book (title, (author+ | editor+ ), publisher, price)>
+<!ATTLIST book year CDATA #REQUIRED >
+<!ELEMENT author (last, first)>
+<!ELEMENT editor (last, first, affiliation)>
+<!ELEMENT title (#PCDATA)> <!ELEMENT last (#PCDATA)>
+<!ELEMENT first (#PCDATA)> <!ELEMENT affiliation (#PCDATA)>
+<!ELEMENT publisher (#PCDATA)> <!ELEMENT price (#PCDATA)>
+ 
+ Write the XML Schema for the following XML document. 
+ 
+<?xml version="1.0" encoding="UTF-8" ?>  
+   
+<bank> 
+<accounts> 
+<savings_accounts> 
+   <savings_account id="a1" interest="0.03"> 
+         <balance>2500</balance>  
+  </savings_account> 
+<savings_account id="a2" interest="0.03"> 
+     <balance>15075</balance>  
+  </savings_account> 
+  </savings_accounts> 
+<checking_accounts> 
+<checking_account id="a3"> 
+       <balance>4025</balance>  
+  </checking_account> 
+      <checking_account id="a4"> 
+       <balance>-125</balance>  
+  </checking_account> 
+<checking_account id="a5"> 
+        <balance>325</balance>  
+  </checking_account> 
+</checking_accounts> 
+</accounts> 
+<customers> 
+<customer id="c1"> 
+  <name>Ben Richerdson</name>  
+  <address>Park Drive 2</address>  
+  </customer> 
+<customer id="c2"> 
+  <name>Marc Wretcher</name>  
+  <address>Mill Drive 75</address>  
+  </customer> 
+<customer id="c3"> 
+  <name>Angel Steady</name>  
+  <address>Lake Sight 15</address>  
+  </customer> 
+  </customers> 
+<customer_accounts> 
+  <customer_account c_id="c1" ac_id="a2" />  
+  <customer_account c_id="c1" ac_id="a3" />  
+  <customer_account c_id="c2" ac_id="a4" />  
+  <customer_account c_id="c3" ac_id="a1" />  
+  <customer_account c_id="c3" ac_id="a5" />  
+  </customer_accounts> 
+  </bank>
+ 
+ 
+a.xsd
+ 
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="bib">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="book" maxOccurs="unbounded" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element type="xs:string" name="title" />
+                            <xs:element name="author" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="last" />
+                                        <xs:element type="xs:string" name="first" />
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="editor" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="last" />
+                                        <xs:element type="xs:string" name="first" />
+                                        <xs:element type="xs:string" name="affiliation" />
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element type="xs:string" name="publisher" />
+                            <xs:element type="xs:float" name="price" />
+                        </xs:sequence>
+                        <xs:attribute type="xs:short" name="year" use="optional" />
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
+ 
+ 
+b)
+ 
+b.xml
+ 
+<pets>
+<pet>
+<name>Tilly</name>
+<age>14</age>
+<type>cat</type>
+<color>silver</color>
+</pet>
+<pet>
+<name>Amanda</name>
+<age>10</age>
+<type>dog</type>
+<color>brown</color>
+</pet>
+<pet>
+<name>Jack</name>
+<age>3</age>
+<type>cat</type>
+<color>black</color>
+</pet>
+<pet>
+<name>Blake</name>
+<age>12</age>
+<type>dog</type>
+<color>blue</color>
+</pet>
+<pet>
+<name>Loosey</name>
+<age>1</age>
+<type>cat</type>
+<color>brown</color>
+</pet>
+<pet>
+<name>Stop</name>
+<age>5</age>
+<type>pig</type>
+<color>brown</color>
+</pet>
+</pets>
+ 
+ 
+<!ELEMENT pets (pet+)>
+<!ELEMENT pet (name, age, type, color)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT age (#PCDATA)>
+<!ELEMENT type (#PCDATA)>
+<!ELEMENT color (#PCDATA)>
+ 
+ 
+ 
+ 
+ Write the DTD for the following XML document. 
+ 
+ 
+      <Books> 
+ <Book> 
+ <Isbn> 0 – 8447 – 768 </Isbn> 
+ <Title> XML in a Nutshell </Title> 
+ <Author> Harold, Elliotte Rusty </Author> 
+ </Book> 
+  <Book> 
+  <Isbn> 978 – 81 – 317 – 6235 – 6 </Isbn> 
+  <Title> Service – Oriented Architecture </Title> 
+  <Author> Thomas Erl </Author> 
+  </Book> 
+   <Book> 
+   <Isbn> 978 – 81 – 317 – 1869 – 8 </Isbn> 
+   <Title> XML and WebServices </Title> 
+   <Author> Ron Schmelzer </Author> 
+   </Book> 
+   </Books>
+ 
+ 
+c)
+ 
+c.xml
+ 
+ 
+<letter>
+<date>December 11, 2002</date>
+<addressee>
+<name>Melvile Dewey</name>
+<address_one>Columbia University</address_one>
+<address_two>New York, NY</address_two>
+</addressee>
+<greeting>Dear Melvile,</greeting>
+<paragraph> I have been reading your ideas concerning the nature of librarianship, and I find them very intriguing. I would love the opportunity to discuss with you the role of the card catalog in today's libraries considering the advent to World Wide Web. Specifically, how are things like Google and Amazon.com changing our patrons' expectations of library services? Mr. Cutter and I will be discussing these ideas at the next Annual Meeting, and we are available at the following dates/times: </paragraph>
+<list>
+<item>Monday, 2-4</item>
+<item>Tuesday, 3-5</item>
+<item>Thursday, 1-3</item>
+</list>
+<closing>We hope you can join us.</closing>
+<signature>Sincerely,</signature>
+<name>James k Robert</name>
+</letter>
+ 
+ 
+c.dtd
+ 
+<!ELEMENT letter (date, addressee, greeting, paragraph, list, closing, signature, name)>
+<!ELEMENT date (#PCDATA)>
+<!ELEMENT addressee (name, address_one, address_two)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT address_one (#PCDATA)>
+<!ELEMENT address_two (#PCDATA)>
+<!ELEMENT greeting (#PCDATA)>
+<!ELEMENT paragraph (#PCDATA)>
+<!ELEMENT list (item+)>
+<!ELEMENT item (#PCDATA)>
+<!ELEMENT closing (#PCDATA)>
+<!ELEMENT signature (#PCDATA)>
+ 
+ 
+ 
+ 
+ 
+Convert the following XML document into an XHTML table using XSLT.  
+ <? Xml version = ”1.0”  ?> 
+       <? Xml : stylesheet type = ”text/xsl”  href = ”Students.xsl”  ?> 
+          <Students> 
+<Student> 
+<name>John</name> 
+<rollno>CS101</rollno> 
+<department>CSE</department> 
+<cgpa>9.5</cgpa> 
+</Student> 
+ <Student> 
+<name>Williams</name> 
+<rollno>CE034</rollno> 
+<department>CIVIL</department> 
+<cgpa>7.4</cgpa> 
+</Student> 
+<Student> 
+<name>Rohit</name> 
+<rollno>EC087</rollno> 
+<department>ECE</department> 
+<cgpa>8.7</cgpa> 
+</Student> 
+</Students>
+ 
+ d)
+ 
+d.xml
+ 
+<bank>
+<account account-number="A-101" branch-name="Downtown" balance="500"> </account>
+<account account-number="A-102" branch-name="Perryridge" balance="400"> </account>
+<account account-number="A-201" branch-name="Brighton" balance="900"> </account>
+<customer customer-name="Johnson" customer-street="Alma" customer-city="Palo Alto"> </customer>
+<customer customer-name="Hayes" customer-street="Main" customer-city="Harrison"> </customer>
+<depositor account-number="A-101" customer-name="Johnson"> </depositor>
+<depositor account-number="A-201" customer-name="Johnson"> </depositor>
+<depositor account-number="A-102" customer-name="Hayes"> </depositor>
+</bank>
+ 
+d.dtd
+ 
+<!ELEMENT bank (account*, customer*, depositor*)>
+<!ELEMENT account (#PCDATA)>
+<!ATTLIST account
+    account-number CDATA #REQUIRED
+    branch-name CDATA #REQUIRED
+    balance CDATA #REQUIRED
+>
+<!ELEMENT customer (#PCDATA)>
+<!ATTLIST customer
+    customer-name CDATA #REQUIRED
+    customer-street CDATA #REQUIRED
+    customer-city CDATA #REQUIRED
+>
+<!ELEMENT depositor (#PCDATA)>
+<!ATTLIST depositor
+    account-number CDATA #REQUIRED
+    customer-name CDATA #REQUIRED
+>
+ 
+ 
+ 
+ 
+ Write the DTD and XML Schema for the following XML document. 
+<? Xml version = ”1.0”  ?> 
+<? Xml : stylesheet type = ”text/xsl”  href = ”Students.xsl”  ?> 
+<Employee> 
+<Emp> 
+<name>Roshan</name> 
+<eid>E101</eid> 
+<department>HR</department> 
+<doj>09-SEP-1999</doj> 
+<salary>68,000</salary> 
+</Emp> 
+<Emp> 
+<name>Mary</name> 
+<eid>E233</eid> 
+<department>Accounts</department> 
+<doj>06-AUG-2001</doj> 
+<salary>24,000</salary> 
+</Emp> 
+<Emp> 
+<name>Sunil</name> 
+<eid>E521</eid> 
+<department>Engineering</department> 
+<doj>04-NOV-2009</doj> 
+<salary>42,000</salary> 
+</Emp> 
+</Employee> 
+
+
+d.xsd
+
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="bank">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="account"
+                    type="accountType"
+                    minOccurs="0"
+                    maxOccurs="unbounded" />
+                <xs:element name="customer"
+                    type="customerType"
+                    minOccurs="0"
+                    maxOccurs="unbounded" />
+                <xs:element name="depositor"
+                    type="depositorType"
+                    minOccurs="0"
+                    maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="accountType">
+        <xs:attribute name="account-number"
+            type="xs:string"
+            use="required" />
+        <xs:attribute name="branch-name"
+            type="xs:string"
+            use="required" />
+        <xs:attribute name="balance"
+            type="xs:string"
+            use="required" />
+    </xs:complexType>
+    <xs:complexType name="customerType">
+        <xs:attribute name="customer-name"
+            type="xs:string"
+            use="required" />
+        <xs:attribute name="customer-street"
+            type="xs:string"
+            use="required" />
+        <xs:attribute name="customer-city"
+            type="xs:string"
+            use="required" />
+    </xs:complexType>
+    <xs:complexType name="depositorType">
+        <xs:attribute name="account-number"
+            type="xs:string"
+            use="required" />
+        <xs:attribute name="customer-name"
+            type="xs:string"
+            use="required" />
+    </xs:complexType>
+</xs:schema>
+
+
+
+
+
+e.xsl
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <xsl:template match="/">
+    <html>
+      <head>
+        <title>Pets</title>
+        <style>
+          table {
+            
+            width: 50%;
+          }
+          th,tr {
+            text-align : center;
+          }
+          
+        </style>
+      </head>
+      <body>
+        <table border="1">
+          <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Type</th>
+            <th>Color</th>
+          </tr>
+          <xsl:for-each select="pets/pet">
+            <tr>
+              <td><xsl:value-of select="name"/></td>
+              <td><xsl:value-of select="age"/></td>
+              <td><xsl:value-of select="type"/></td>
+              <td><xsl:value-of select="color"/></td>
+            </tr>
+          </xsl:for-each>
+        </table>
+      </body>
+    </html>
+  </xsl:template>
+</xsl:stylesheet>
+
+
+
+
+
+ 
