@@ -1,0 +1,566 @@
+1)
+
+
+
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Border Styles</title>
+    <style>
+        .thick-groove {
+            border: 4px groove;
+        }
+ 
+        .medium-groove {
+            border: 2px groove;
+        }
+ 
+        .thin-groove {
+            border: 1px groove;
+        }
+ 
+        .thin-red-inset {
+            border: 1px inset red;
+        }
+ 
+        .medium-blue-outset {
+            border: 2px outset blue;
+        }
+    </style>
+</head>
+<body>
+    <p class="thick-groove">Thick Groove</p>
+    <p class="medium-groove">Medium Groove</p>
+    <p class="thin-groove">Thin Groove</p>
+    <p class="thin-red-inset">Thin Red Inset</p>
+    <p class="medium-blue-outset">Medium Blue Outset</p>
+</body>
+</html>
+ 
+Write the CSS rules to display the following borders.  
+Thick Groove  
+                    Medium Groove   
+ Thin Groove  
+Thin Red Inset  
+Medium Blue Outset 
+2)
+
+
+
+ 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Web Page</title>
+    <style>
+        /* External CSS Document */
+ 
+        /* Header 1 */
+        h1 ,h2 {
+            color: green;
+            font-size: 22pt;
+            font-family: "Times New Roman", Times, serif;
+        }
+ 
+        
+ 
+        /* Paragraph */
+        p {
+            color: black;
+            font-size: 12pt;
+            font-family: "Times New Roman", Times, serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Your HTML content goes here -->
+    <h1>Heading 1</h1>
+    <h2>Heading 2</h2>
+  <p>Paragraph </p>
+</body>
+</html>
+Design an external CSS document with two headers contained in <h1>and   
+    <h2>tags in which <h1>and <h2>elements both are in green, 22pt, Times New   
+     Roman font. Add a paragraph of text also in black, Times New Roman font, but   
+     12pt in size. No declaration may be repeated. Include comments to signify what   
+  each rule does.   
+
+
+
+
+3)
+
+
+
+html
+
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Styled Web Page</title>
+</head>
+<body>
+  <h1>Heading 1</h1>
+  <p>Paragraph text goes here.</p>
+</body>
+</html>
+Compose a web page with a heading of <h1>and a paragraph of text <p>. Specify   
+  the font size in the selector for the <body>element as 12 pixels. Specify the   
+  heading font size as 1.2em. Give the paragraph a font size of 0.9em. Give the   
+  heading a thin, black, solid border and a pink back- ground. Give the paragraph a   
+  thin, solid, black border, white text, and a gray background. Give both the   
+  heading and the paragraph a padding of 1em.(use External style sheets)  
+
+
+styl;es
+
+/* External CSS Document */
+ 
+body {
+    font-size: 12px;
+  }
+  
+  h1 {
+    font-size: 1.2em;
+    border: 1px solid black;
+    padding: 1em;
+    background-color: pink;
+  }
+  
+  p {
+    font-size: 0.9em;
+    border: 1px solid black;
+    padding: 1em;
+    color: white;
+    background-color: gray;
+  }
+  
+4)
+
+
+
+content.css
+
+
+
+/* User Content CSS File */
+ 
+body {
+    background-color: white;
+    color: black;
+  }
+  
+  a:link {
+    color: blue;
+  }
+  
+  a:visited {
+    color: purple;
+  }
+  
+  a:active {
+    color: red;
+  }
+  
+  input {
+    background-color: white;
+    border: 1px solid black;
+    color: black;
+  }
+  /* Write your own user Content.css file. Make all backgrounds white and all text   
+        black. Make all unvisited links blue, visited links purple, and active links red.   
+        Have all input fields use a white background with a black border and black text.   
+        Don’t display any images. */
+ 
+  
+index.html
+ 
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="userContent.css">
+  <title>User Content Example</title>
+</head>
+<body>
+  <h1> Content Example</h1>
+  <p>This is a sample HTML page with user-defined styles.</p>
+  <a href="#">Unvisited Link</a>
+  <br>
+  <a href="#" style="color: purple;">Visited Link</a>
+  <br>
+  <a href="#" style="color: red;">Active Link</a>
+  <br>
+  <input type="text" placeholder="input field...">
+  <br>
+  
+</body>
+</html>
+
+
+5)
+
+
+
+index.html
+
+
+
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Tabbed Navigation</title>
+</head>
+<body>
+  <ul class="tab-menu">
+    <li><a href="t1.html">Tab 1</a></li>
+    <li><a href="t2.html">Tab 2</a></li>
+    <li><a href="t3.html">Tab 3</a></li>
+    <li><a href="t4.html">Tab 4</a></li>
+  </ul>
+</body>
+</html>
+Using the list-style-type property and other properties, create a tabbed navigation   
+menu using only lists (<ul> and <li>) and CSS. Include four links, one in each   
+list-item and lay out the tabs horizontally. Put a thin, solid border below all the   
+tabs and around each individual tab, make each tab 100 pixels wide, center the   
+text of each tab, and space each tab from the other. 
+ 
+ 
+styles.css
+ 
+/* External CSS Document */
+ 
+body {
+    font-size: 12px;
+  }
+  
+  .tab-menu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid black;
+  }
+  
+  .tab-menu li {
+    display: inline-block;
+    width: 100px;
+    text-align: center;
+    border: 1px solid black;
+    margin-right: 10px;
+  }
+  
+  .tab-menu a {
+    text-decoration: none;
+    color: black;
+    display: block;
+    padding: 10px;
+  }
+  
+  .tab-menu a:hover {
+    background-color: lightgray;
+  }
+  
+ 
+tab1, tab2, tab3
+ 
+ 
+part c
+ 
+1)
+ 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Shopping List for Monday</title>
+    <style type="text/css">
+        ul {
+            margin-left: 0px;
+            
+        }
+        ul ul {
+            margin-left: -40px;
+        }
+       
+        em {
+            font-weight: bold;
+            color: red;
+        }
+        a {
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+            color: red;
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <h1>Shopping list for <i>Monday</i> </h1>
+    <ul type="square" >
+        <li>Milk</li>
+        <li>Bread
+            <ul>
+                <li>White bread</li>
+                <li>Rye bread</li>
+                <li>Whole wheat bread</li>
+            </ul>
+        </li>
+        <li>Rice</li>
+        <li>Potatoes</li>
+        <li >Pizza <em>with mushrooms</em></li>
+        <a href="http://www.google.com">Go to the Grocery store</a>
+    </ul>
+ 
+    
+</body>
+</html>
+ 
+Design the following web page using XHTML with conflicting styles. The Left margin for 
+unordered list elements is set as 75 pixels and for nested list elements, it is set as 15 pixels 
+whose text is underlined. The emphasized text is bold whose color is red. Initially, the text 
+format for the link text is none. When the mouse is placed over the link, the text is underlined 
+whose color changes to red and the background color is set to “aqua”. 
+Shopping list for Monday: 
+ Milk 
+ Bread 
+o White bread 
+o Rye bread 
+o Whole wheat bread 
+ Rice 
+ Potatoes 
+ Pizza with mushrooms 
+Go to the Grocery store
+ 
+ 
+b)
+ 
+index
+ 
+ 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Web Page</title>
+    <style>
+        /* External CSS Document */
+ 
+        /* Header 1 */
+        h1 ,h2 {
+            color: green;
+            font-size: 22pt;
+            font-family: "Times New Roman", Times, serif;
+        }
+ 
+        
+ 
+        /* Paragraph */
+        p {
+            color: black;
+            font-size: 12pt;
+            font-family: "Times New Roman", Times, serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Your HTML content goes here -->
+    <h1>Heading 1</h1>
+    <h2>Heading 2</h2>
+  <p>Paragraph </p>
+</body>
+</html>
+ 
+Design the web page with the CSS styles as in Ex.2 using XHTML. The styles (CSS 
+rules) are coded in a separate document(style.css). Link the external CSS file to the 
+corresponding XHML file. Also validate the CSS file using W3C CSS validation service.
+ 
+index xhtml
+ 
+ 
+<!-- index.xhtml -->
+ 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>My Web Page</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+    <!--  XHTML content  -->
+    <!-- https://jigsaw.w3.org/css-validator/)-->
+    <h1>Heading 1</h1>
+    <h2>Heading 2</h2>
+    <p>Paragraph</p>
+</body>
+</html>
+ 
+ 
+style.css
+ 
+/* style.css */
+ 
+/* Header 1 and Header 2 */
+h1, h2 {
+  color: green;
+  font-size: 22pt;
+  font-family: "Times New Roman", Times, serif;
+}
+ 
+/* Paragraph */
+p {
+  color: black;
+  font-size: 12pt;
+  font-family: "Times New Roman", Times, serif;
+}
+
+
+c)
+
+
+
+index
+
+ 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Web Page with User Style Sheet</title>
+  <link rel="stylesheet" type="text/css" href="userstyle.css" />
+</head>
+<body>
+  <p>
+    Thanks for visiting my web site. I hope you enjoy a lot.<br />
+    Please Note: This site will be moving soon. Check periodically for updates.
+  </p>
+</body>
+</html>
+ 
+Design a web page that contains the following paragraph. 
+Thanks for visiting my web site. I hope you enjoy a lot. 
+Please Note: This site will be moving soon. Check periodically for updates. 
+Write a separate User Style Sheet with the following styles. The body 
+text is formatted as follows: 
+font-size: 20pt; color: yellow; backgroundcolor: blue 
+Set this user style sheet in your browser’s options and apply it to the XHTML file containing 
+the above paragraph. 
+
+
+userstyle
+
+
+
+body {
+  font-size: 20pt;
+  color: yellow;
+  background-color: blue;
+}
+
+
+
+d)
+
+
+
+ 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Color Survey</title>
+</head>
+<body>
+  <form>
+    <label><input type="radio" name="color" value="red" checked />Red</label><br />
+    <label><input type="radio" name="color" value="blue" />Blue</label><br />
+    <label><input type="radio" name="color" value="green" />Green</label><br />
+    <label><input type="radio" name="color" value="yellow" />Yellow</label><br />
+  </form>
+  <table>
+    <tr style="background-color: red;">
+      <td>Red</td>
+      <td>30%</td>
+    </tr>
+    <tr style="background-color: blue;">
+      <td>Blue</td>
+      <td>25%</td>
+    </tr>
+    <tr style="background-color: green;">
+      <td>Green</td>
+      <td>20%</td>
+    </tr>
+    <tr style="background-color: yellow;">
+      <td>Yellow</td>
+      <td>25%</td>
+    </tr>
+  </table>
+</body>
+</html>
+ 
+Write an XHTML document that shows the results of a color survey. The document 
+should contain a form with radio buttons that allows users to vote for their favorite color. One 
+of the colors should be selected as a default. The document should also contain a table 
+showing various colors and the corresponding percentage of votes for each color. Each row 
+should be displayed in the color to which it is referring. Use inline style sheets for 
+formatting.
+ 
+ 
+e)
+ 
+ 
+ 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>CSS Rules Example</title>
+  <style type="text/css">
+    /* (i) */
+    h1, h2 {
+      padding: 0.5em;
+      border-style: grooved;
+      margin: 0.5em;
+    }
+ 
+    /* (ii) */
+    .greenMove {
+      color: green;
+      position: relative;
+      top: 25px;
+      right: 15px;
+    }
+  </style>
+</head>
+<body>
+  <h1>H1 heading</h1>
+  <h2>H2 heading</h2>
+  <h2 class="greenMove">H2 heading with green move</h2>
+  <p class="greenMove">this is paragraph greenMove class.</p>
+  
+  
+</body>
+</html>
+ 
+.(i) 
+Write a CSS rule that gives all h1 and h2 elements a padding of 0.5 ems, a 
+grooved border style and a margin of 0.5 ems. 
+(ii) 
+Write a CSS rule that changes the color of all elements containing attribute 
+class ="greenMove" to green and shifts them down 25 pixels and right 15 pixels.

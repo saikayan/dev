@@ -1,0 +1,526 @@
+Alright — here’s a **clear, step-by-step guide** to run your PHP + MySQL project using **XAMPP**. Follow this exactly and it will work.
+
+---
+
+# 🧰 Step 1: Install XAMPP
+
+1. Download **XAMPP** from its official site
+2. Install it (keep default settings)
+3. Open **XAMPP Control Panel**
+
+---
+
+# ▶️ Step 2: Start Servers
+
+In XAMPP Control Panel:
+
+* Click **Start** for:
+
+  * **Apache**
+  * **MySQL**
+
+✅ Both should turn **green**
+
+---
+
+# 🗄️ Step 3: Create Database
+
+1. Open browser
+2. Go to:
+
+   ```
+   http://localhost/phpmyadmin
+   ```
+3. Click **New**
+4. Create database:
+
+   ```
+   college_db
+   ```
+
+---
+
+# 📋 Step 4: Create Tables
+
+Click on `college_db` → go to SQL tab → paste:
+
+```sql id="b1"
+CREATE TABLE STUDENT (
+    Rollno INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Branch VARCHAR(50),
+    Year INT,
+    Cgpa FLOAT,
+    DOB DATE,
+    EmailID VARCHAR(100)
+);
+
+CREATE TABLE COURSES (
+    Cid INT PRIMARY KEY,
+    Cname VARCHAR(50),
+    FacultyName VARCHAR(50)
+);
+
+CREATE TABLE COURSE_TAKEN (
+    Rollno INT,
+    Cid INT,
+    PRIMARY KEY (Rollno, Cid),
+    FOREIGN KEY (Rollno) REFERENCES STUDENT(Rollno) ON DELETE CASCADE,
+    FOREIGN KEY (Cid) REFERENCES COURSES(Cid) ON DELETE CASCADE
+);
+```
+
+Click **Go** ✅
+
+---
+
+# 📁 Step 5: Go to htdocs Folder
+
+1. Open XAMPP installation folder
+   Example:
+
+   ```
+   C:\xampp\htdocs
+   ```
+2. Create a new folder:
+
+   ```
+   student_app
+   ```
+
+---
+
+# 📄 Step 6: Create PHP Files
+
+Inside `student_app`, create:
+
+### 1. db.php
+
+Paste:
+
+```php id="b2"
+<?php
+$conn = new mysqli("localhost", "root", "", "college_db");
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+?>
+```
+
+---
+
+### 2. index.php
+
+Paste FULL code:
+
+```php id="b3"
+<?php include 'db.php'; ?>
+
+<h2>Add Student</h2>
+<form method="post">
+    Rollno: <input type="number" name="roll"><br>
+    Name: <input type="text" name="name"><br>
+    Branch: <input type="text" name="branch"><br>
+    Year: <input type="number" name="year"><br>
+    CGPA: <input type="text" name="cgpa"><br>
+    DOB: <input type="date" name="dob"><br>
+    Email: <input type="email" name="email"><br>
+    <input type="submit" name="add_student">
+</form>
+
+<h2>Add Course</h2>
+<form method="post">
+    Cid: <input type="number" name="cid"><br>
+    Name: <input type="text" name="cname"><br>
+    Faculty: <input type="text" name="faculty"><br>
+    <input type="submit" name="add_course">
+</form>
+
+<h2>Assign Course</h2>
+<form method="post">
+    Rollno: <input type="number" name="rollno"><br>
+    Course ID: <input type="number" name="courseid"><br>
+    <input type="submit" name="assign">
+</form>
+
+<h2>Update Student</h2>
+<form method="post">
+    Rollno: <input type="number" name="u_roll"><br>
+    New Name: <input type="text" name="u_name"><br>
+    <input type="submit" name="update">
+</form>
+
+<h2>Delete Student</h2>
+<form method="post">
+    Rollno: <input type="number" name="d_roll"><br>
+    <input type="submit" name="delete">
+</form>
+
+<?php
+
+if(isset($_POST['add_student'])){
+    $sql = "INSERT INTO STUDENT VALUES(
+        $_POST[roll],'$_POST[name]','$_POST[branch]',
+        $_POST[year],$_POST[cgpa],'$_POST[dob]','$_POST[email]'
+    )";
+    echo $conn->query($sql) ? "Student Added<br>" : $conn->error;
+}
+
+if(isset($_POST['add_course'])){
+    $sql = "INSERT INTO COURSES VALUES(
+        $_POST[cid],'$_POST[cname]','$_POST[faculty]'
+    )";
+    echo $conn->query($sql) ? "Course Added<br>" : $conn->error;
+}
+
+if(isset($_POST['assign'])){
+    $sql = "INSERT INTO COURSE_TAKEN VALUES(
+        $_POST[rollno],$_POST[courseid]
+    )";
+    echo $conn->query($sql) ? "Course Assigned<br>" : $conn->error;
+}
+
+if(isset($_POST['update'])){
+    $sql = "UPDATE STUDENT SET Name='$_POST[u_name]' WHERE Rollno=$_POST[u_roll]";
+    echo $conn->query($sql) ? "Updated<br>" : $conn->error;
+}
+
+if(isset($_POST['delete'])){
+    $sql = "DELETE FROM STUDENT WHERE Rollno=$_POST[d_roll]";
+    echo $conn->query($sql) ? "Deleted<br>" : $conn->error;
+}
+?>
+```
+
+---
+
+# 🌐 Step 7: Run the Project
+
+Open browser and go to:
+
+```
+http://localhost/student_app/index.php
+```
+
+---
+
+# ✅ Step 8: Test
+
+Try:
+
+* Add a student
+* Add a course
+* Assign course
+* Update student
+* Delete student
+
+---
+
+# ⚠️ Common Errors (Quick Fix)
+
+* ❌ Apache not starting → change port (80 → 8080)
+* ❌ MySQL error → ensure MySQL is running
+* ❌ Page not found → check folder inside `htdocs`
+
+---
+
+# 🎯 Final Result
+
+You now have a **fully working PHP CRUD web application with database connectivity**.
+
+---
+
+If you want, I can next:
+
+* Add **table view (display students)**
+* Improve **UI design**
+* Convert this into **mini project with marks-ready documentation**
+
+
+
+If you “don’t see **htdocs**”, it almost always means one of these is true:
+
+* XAMPP is installed in a different location
+* You’re looking in the wrong folder
+* Or (less common) you installed a different stack
+
+Let’s find it properly 👇
+
+---
+
+# 🔍 Step-by-step: Find `htdocs` manually
+
+### ✅ Method 1: Open from XAMPP (easiest)
+
+1. Open **XAMPP Control Panel**
+2. Click **Explorer** (top-right button)
+
+👉 This opens the XAMPP installation folder
+Inside it, you should see:
+
+```
+xampp/
+ ├── apache/
+ ├── mysql/
+ ├── htdocs/   ✅ (this is what you need)
+```
+
+---
+
+### ✅ Method 2: Default Locations (check these)
+
+#### On Windows:
+
+Look in:
+
+```
+C:\xampp\htdocs
+```
+
+OR sometimes:
+
+```
+C:\Program Files\xampp\htdocs
+```
+
+---
+
+#### On macOS:
+
+```
+/Applications/XAMPP/htdocs
+```
+
+---
+
+#### On Linux:
+
+```
+/opt/lampp/htdocs
+```
+
+---
+
+# ❗ If You STILL Don’t See `htdocs`
+
+Then one of these is happening:
+
+### 🚫 1. XAMPP not installed properly
+
+* Reinstall **XAMPP**
+* Make sure installation completes fully
+
+---
+
+### 🚫 2. You installed something else (like WAMP)
+
+Check if you're using:
+
+* **WAMP**
+
+Then your folder is:
+
+```
+C:\wamp\www
+```
+
+👉 In WAMP, **`www` = `htdocs`**
+
+---
+
+### 🚫 3. Using VS Code / random PHP setup
+
+Then there is **no htdocs by default**
+
+👉 You must:
+
+* Either install XAMPP
+* Or configure a server manually (advanced)
+
+---
+
+# 🔧 What You Should Do Now
+
+👉 Easiest fix:
+
+1. Open XAMPP
+2. Click **Explorer**
+3. Open `htdocs`
+4. Create your folder:
+
+   ```
+   student_app
+   ```
+5. Put your `index.php` inside
+
+---
+
+# ⚡ Quick Test
+
+Inside `htdocs`, create a file:
+
+```php
+<?php
+echo "It works!";
+?>
+```
+
+Then open:
+
+```
+http://localhost/test.php
+```
+
+✅ If it shows “It works!” → you're ready
+
+---
+
+# 🧠 Simple Understanding
+
+* `htdocs` = **your website root folder**
+* Whatever you put inside → accessed via:
+
+  ```
+  http://localhost/
+  ```
+
+---
+
+If you still can’t find it, tell me:
+
+* Your OS (Windows / Mac / Linux)
+* What you installed (XAMPP / something else)
+
+I’ll pinpoint it exactly 👍
+
+
+
+Good question — this is exactly where many beginners get stuck.
+
+In **XAMPP**, the “root” (document root = `htdocs`) isn’t shown directly as a label, but you can **find it from the control panel settings**.
+
+---
+
+# 🔍 Method 1: Use Apache Config (most accurate)
+
+1. Open **XAMPP Control Panel**
+
+2. Next to **Apache**, click **Config**
+
+3. Click:
+
+   ```
+   Apache (httpd.conf)
+   ```
+
+4. A file will open → press **Ctrl + F**
+
+5. Search for:
+
+   ```
+   DocumentRoot
+   ```
+
+You’ll see something like:
+
+```id="docroot1"
+DocumentRoot "C:/xampp/htdocs"
+<Directory "C:/xampp/htdocs">
+```
+
+👉 ✅ That path is your **root folder**
+
+---
+
+# 📁 Method 2: Use Explorer Button (fastest)
+
+1. Open XAMPP Control Panel
+2. Click **Explorer**
+
+👉 It opens something like:
+
+```
+C:\xampp\
+```
+
+Now just open:
+
+```
+htdocs
+```
+
+👉 That’s your root
+
+---
+
+# ⚙️ Method 3: Apache → Config → httpd-vhosts.conf (optional)
+
+If virtual hosts are enabled:
+
+1. Go to:
+
+   ```
+   Apache → Config → httpd-vhosts.conf
+   ```
+2. Look for:
+
+```id="docroot2"
+DocumentRoot "C:/xampp/htdocs"
+```
+
+---
+
+# 🧠 What “Root” Means (Simple)
+
+* Root folder = where your website files live
+* In XAMPP:
+
+  ```
+  htdocs = root
+  ```
+
+So:
+
+| Folder Path            | URL                         |
+| ---------------------- | --------------------------- |
+| `htdocs/test.php`      | `http://localhost/test.php` |
+| `htdocs/app/index.php` | `http://localhost/app/`     |
+
+---
+
+# ⚠️ If You See a Different Path
+
+Sometimes it may be:
+
+```id="docroot3"
+DocumentRoot "D:/my_projects"
+```
+
+👉 Then your root is **not htdocs** — it’s that folder.
+
+---
+
+# ✅ Final Quick Check
+
+1. Find root using method above
+2. Create file:
+
+```php id="testcode"
+<?php echo "Hello Root"; ?>
+```
+
+3. Open:
+
+```
+http://localhost/filename.php
+```
+
+✔️ If it works → you found the correct root
+
+---
+
+If you want, I can also show how to:
+
+* Change the root folder (very useful for projects)
+* Or set up multiple projects cleanly (like a pro setup)

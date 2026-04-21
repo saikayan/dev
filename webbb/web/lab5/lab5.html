@@ -1,0 +1,285 @@
+Perfect — below are separate HTML and JavaScript files for each question (4.a – 4.f) exactly as requested.
+Each question has:
+
+✅ HTML file
+✅ JavaScript file
+
+You can save them with the shown filenames and run the HTML files in a browser.
+
+✅ 4.a Sphere Volume & Circle Area
+📄 4a.html
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Sphere Volume and Circle Area</title>
+<script src="4a.js"></script>
+</head>
+<body>
+<h3>Sphere Volume and Circle Area</h3>
+
+Radius:
+<input type="text" id="radius" />
+<br/><br/>
+<input type="button" value="Calculate" onclick="calculate()" />
+
+<p id="result"></p>
+</body>
+</html>
+📄 4a.js
+function Sphere_Volume(r) {
+    return (4 / 3) * Math.PI * r * r * r;
+}
+
+function Circle_Area(r) {
+    return Math.PI * r * r;
+}
+
+function calculate() {
+    var r = parseFloat(document.getElementById("radius").value);
+    var volume = Sphere_Volume(r);
+    var area = Circle_Area(r);
+
+    document.getElementById("result").innerHTML =
+        "Sphere Volume = " + volume.toFixed(2) +
+        "<br/>Circle Area = " + area.toFixed(2);
+}
+✅ 4.b Distance Between Two Points
+📄 4b.html
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Distance Between Two Points</title>
+<script src="4b.js"></script>
+</head>
+<body>
+<h3>Distance Between Two Points</h3>
+
+x1: <input type="text" id="x1" />
+y1: <input type="text" id="y1" /><br/><br/>
+
+x2: <input type="text" id="x2" />
+y2: <input type="text" id="y2" /><br/><br/>
+
+<input type="button" value="Find Distance" onclick="calculateDistance()" />
+<br/><br/>
+
+<textarea id="result" rows="2" cols="30"></textarea>
+</body>
+</html>
+📄 4b.js
+function Compute_Distance(x1, y1, x2, y2) {
+    return Math.sqrt((x2 - x1) * (x2 - x1) +
+                     (y2 - y1) * (y2 - y1));
+}
+
+function calculateDistance() {
+    var x1 = parseFloat(document.getElementById("x1").value);
+    var y1 = parseFloat(document.getElementById("y1").value);
+    var x2 = parseFloat(document.getElementById("x2").value);
+    var y2 = parseFloat(document.getElementById("y2").value);
+
+    var d = Compute_Distance(x1, y1, x2, y2);
+    document.getElementById("result").value = "Distance = " + d.toFixed(2);
+}
+✅ 4.c Integer Power (Without Math Library)
+📄 4c.html
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Integer Power</title>
+<script src="4c.js"></script>
+</head>
+<body>
+<h3>Integer Power</h3>
+
+Base:
+<input type="text" id="base" />
+Exponent:
+<input type="text" id="exp" />
+<br/><br/>
+
+<input type="button" value="Calculate" onclick="calculatePower()" />
+<br/><br/>
+
+<textarea id="result" rows="2" cols="25"></textarea>
+</body>
+</html>
+📄 4c.js
+function Integer_Power(base, exponent) {
+    var result = 1;
+    for (var i = 1; i <= exponent; i++) {
+        result = result * base;
+    }
+    return result;
+}
+
+function calculatePower() {
+    var b = parseInt(document.getElementById("base").value);
+    var e = parseInt(document.getElementById("exp").value);
+
+    var ans = Integer_Power(b, e);
+    document.getElementById("result").value = "Result = " + ans;
+}
+✅ 4.d Prime Numbers (1–1000)
+📄 4d.html
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Prime Numbers</title>
+<script src="4d.js"></script>
+</head>
+<body>
+<h3>Prime Numbers Between 1 and 1000</h3>
+
+<input type="button" value="Show Primes" onclick="showPrimes()" />
+<br/><br/>
+
+<textarea id="result" rows="12" cols="50"></textarea>
+</body>
+</html>
+📄 4d.js
+function isPrime(n) {
+    if (n <= 1) return false;
+    for (var i = 2; i <= Math.sqrt(n); i++) {
+        if (n % i === 0) return false;
+    }
+    return true;
+}
+
+function showPrimes() {
+    var output = "";
+    var count = 0;
+
+    for (var i = 1; i <= 1000; i++) {
+        if (isPrime(i)) {
+            output += i + " ";
+            count++;
+        }
+    }
+
+    document.getElementById("result").value =
+        output + "\n\nTotal Prime Numbers = " + count;
+}
+✅ 4.e Armstrong Numbers (100–5000)
+📄 4e.html
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Armstrong Numbers</title>
+<script src="4e.js"></script>
+</head>
+<body>
+<h3>Armstrong Numbers Between 100 and 5000</h3>
+
+<input type="button" value="Show Armstrong Numbers" onclick="showArmstrong()" />
+<br/><br/>
+
+<textarea id="result" rows="6" cols="50"></textarea>
+</body>
+</html>
+📄 4e.js
+function isArmstrong(n) {
+    var temp = n;
+    var sum = 0;
+    var digits = n.toString().length;
+
+    while (temp > 0) {
+        var r = temp % 10;
+        sum += Math.pow(r, digits);
+        temp = Math.floor(temp / 10);
+    }
+    return sum === n;
+}
+
+function showArmstrong() {
+    var output = "";
+
+    for (var i = 100; i <= 5000; i++) {
+        if (isArmstrong(i)) {
+            output += i + " ";
+        }
+    }
+
+    document.getElementById("result").value = output;
+}
+✅ 4.f Scientific Calculator
+📄 4f.html
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Scientific Calculator</title>
+<script src="4f.js"></script>
+</head>
+<body>
+<h3>Scientific Calculator</h3>
+
+<input type="text" id="display" /><br/><br/>
+
+<input type="button" value="7" onclick="insert('7')" />
+<input type="button" value="8" onclick="insert('8')" />
+<input type="button" value="9" onclick="insert('9')" />
+<input type="button" value="+" onclick="insert('+')" /><br/>
+
+<input type="button" value="4" onclick="insert('4')" />
+<input type="button" value="5" onclick="insert('5')" />
+<input type="button" value="6" onclick="insert('6')" />
+<input type="button" value="-" onclick="insert('-')" /><br/>
+
+<input type="button" value="1" onclick="insert('1')" />
+<input type="button" value="2" onclick="insert('2')" />
+<input type="button" value="3" onclick="insert('3')" />
+<input type="button" value="*" onclick="insert('*')" /><br/>
+
+<input type="button" value="0" onclick="insert('0')" />
+<input type="button" value="." onclick="insert('.')" />
+<input type="button" value="/" onclick="insert('/')" />
+<input type="button" value="=" onclick="calculate()" /><br/><br/>
+
+<input type="button" value="Sin" onclick="sinFn()" />
+<input type="button" value="Cos" onclick="cosFn()" />
+<input type="button" value="Tan" onclick="tanFn()" />
+<input type="button" value="Sqrt" onclick="sqrtFn()" />
+<input type="button" value="Clear" onclick="clearDisplay()" />
+
+</body>
+</html>
+📄 4f.js
+function insert(val) {
+    document.getElementById("display").value += val;
+}
+
+function clearDisplay() {
+    document.getElementById("display").value = "";
+}
+
+function calculate() {
+    document.getElementById("display").value =
+        eval(document.getElementById("display").value);
+}
+
+function sinFn() {
+    document.getElementById("display").value =
+        Math.sin(document.getElementById("display").value);
+}
+
+function cosFn() {
+    document.getElementById("display").value =
+        Math.cos(document.getElementById("display").value);
+}
+
+function tanFn() {
+    document.getElementById("display").value =
+        Math.tan(document.getElementById("display").value);
+}
+
+function sqrtFn() {
+    document.getElementById("display").value =
+        Math.sqrt(document.getElementById("display").value);
+}
+If you'd like, I can:
+✅ Add lab record formatting
+✅ Add output screenshots
+✅ Convert to strict XHTML validation
+✅ Bundle all into a ZIP-style structure
+
+Just tell me 😊

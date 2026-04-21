@@ -1,0 +1,555 @@
+<html>
+<head> <title>Camelid Comparison</title> </head>
+<body>
+  <h1 style="font-size: 30px; ">Table example page</h1>
+  <p style="text-align: center; font-size: 15px;">Here is a more complex sample page</p>
+  <table border="1" ">
+    <tr style=" height: 90px;">
+    <td rowspan="2"><img src="camel.PNG"></td>
+    <td colspan="4" style="text-align: center;">
+      <h style="font-size: 40px;"><b>Camelid comparision</h>
+      </h>
+      <p><b>Approximate as of 9/2002</b></p>
+    </td>
+    </tr>
+    <tr style="height: 30px;">
+      <td><b># of Humps</b></td>
+      <td><b>Indigeneous region</b></td>
+      <td><b>Spits ?</b></td>
+      <td><b>Produces Wool?</b></td>
+    </tr>
+    <tr>
+      <td style="text-align: end;"><b>Camels (bactrian)</b></td>
+      <td>2</td>
+      <td>Africa/Asia</td>
+      <td rowspan="2">Llama</td>
+      <td rowspan="2">Llama</td>
+    </tr>
+    <tr>
+      <td style="text-align: end;"><b>Llamas</b></td>
+      <td>1</td>
+      <td>Andes Mountin</td>
+    </tr>
+</body>
+</html>
+
+
+
+b)
+
+index.html
+
+
+
+ 
+<html>
+<head>
+    <title>My Profile</title>
+</head>
+<body>
+<h1>LK's Profile</h1>
+<a href="personal_profile.html">
+    <img src="img.jpg" alt=" Image">
+</a>
+<div>
+    <a href="acad.html">Academic Profile</a><br>
+    <a href="mini_projects.html">List of Mini Projects</a><br>
+    <a href="personal_profile.html">Personal Profile</a>
+</div>
+ 
+</body>
+</html>
+ 
+acad.html
+ 
+ 
+ 
+<html>
+<head>
+    <title>Academic Profile</title>
+</head>
+<body>
+ 
+<h1>Academic Profile</h1>
+ 
+<p><b>Name</b>  LK</p>
+<p><b>Course</b>  B. Tech</p>
+<p><b>Dept</b>  CSE</p>
+<p><b>College</b>  Nit Trichy</p>
+ 
+<p><a href="index.html">HOME</a></p>
+</body>
+</html>
+ 
+ 
+mini_projects.html
+ 
+ 
+<head>
+    <title>List of Mini Projects</title>
+</head>
+<body>
+ 
+<h1>List of Mini Projects</h1>
+<ul>
+    <li> Task Manager</i>
+    <li> Expense Tracker taker</li>
+    <li> Unity Game</li>
+</ul>
+<p><a href="index.html">HOME</a></p>
+</body>
+</html>
+ 
+ 
+personal_profile.html
+ 
+ 
+<html lang="en">
+<head>
+    <title>Personal Profile</title>
+</head>
+<body>
+    <h1>Personal Profile</h1>
+    <p>Im LK, my age is 21,this is my personal profile</p>
+    <p><a href="index.html">HOME</a></p>
+</body>
+</html>
+ 
+3)
+
+
+
+index.html
+
+
+
+<html lang="en">
+<head>
+    <title>Flower Details</title>
+</head>
+<frameset cols="30%, 70%">
+    <!-- Left frame  -->
+    <frame src="menu.html" name="menuFrame" scrolling="auto">
+ 
+    <!-- Right frame -->
+    <frame src="default.html" name="detailsFrame" scrolling="auto">
+</frameset>
+</html>
+
+
+default.html
+
+
+
+<html lang="en">
+<head>
+    
+    <title>Default Content</title>
+</head>
+<body>
+ 
+<h2>Select a flower from the menu to view details.</h2>
+ 
+</body>
+</html>
+
+
+
+menu.html
+
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+</head>
+<body>
+ 
+<h2>MENU</h2>
+<ul>
+    <!-- Links to flower details in the right frame -->
+    <li><a href="rose.html" target="detailsFrame">Rose</a></li>
+    <li><a href="jasmine.html" target="detailsFrame">Jasmine</a></li>
+    <li><a href="lotus.html" target="detailsFrame">Lotus</a></li>
+</ul>
+ 
+</body>
+</html>
+
+
+jasmine, rose, lotus .htmls
+
+<head>
+    <title>Jasmine Details</title>
+</head>
+<body>
+ 
+<h2>Jasmine Details</h2>
+ 
+<p>Jasmine is known for its fragrant white or yellow flowers.</p>
+ 
+</body>
+</html>
+
+
+4)
+
+<html lang="en">
+<head>
+    <title>Hot Drinks List</title>
+</head>
+<body>
+ 
+<h2>Hot Drinks List</h2>
+<ul>
+    <li>Coffee</li>
+    <li>Tea
+        <ul>
+            <li>Black Tea</li>
+            <li>Green Tea
+                <ul>
+                    <li>China</li>
+                    <li>Africa</li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li>Milk</li>
+</ul>
+ 
+</body>
+</html>
+ 
+ 
+5)
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+ 
+    <title>Image Map Example</title>
+    <style>
+        #info-container {
+            display: none;
+            border: 1px solid #ccc;
+            padding: 10px;
+            position: absolute;
+            background-color: white;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+ 
+    <h2> Map</h2>
+ 
+    <img src="world-map.jpg" alt="World Map" usemap="#worldMap" id="mapImage"  width="800" height="600" />
+ 
+    <!-- Information container for hot spots -->
+    <div id="info-container">
+        <h3 id="info-title">Country Information</h3>
+        <p id="info-content">Click on a country to see related information.</p>
+    </div>
+ 
+    <map name="worldMap">
+        <area shape="rect" coords="50,100,350,400" alt="USA" title="USA" href="usa.html">
+        <area shape="rect" coords="200,250,600,500" alt="Africa" title=" Africa" href="africa.html">
+        <area shape="rect" coords="400,150,650,300" alt="India" title=" India" href="india.html">
+    </map>
+</body>
+</html>
+
+
+usa.html
+
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USA Details</title>
+</head>
+<body>
+ 
+<h2>USA Details</h2>
+ 
+<p>The United States of America (USA) is a country located in North America.</p>
+<p> The capital city is Washington, D.C.</p>
+ 
+</body>
+</html>
+ 
+africa and india
+ 
+ 
+6)
+ 
+ 
+<head>
+    <title>Vegetable Dropdown</title>
+</head>
+<body>
+ 
+<h2>Select a Vegetable:</h2>
+ 
+<!-- Dropdown list -->
+<select>
+    <option value="brinjal">Brinjal</option>
+    <option value="potato">Potato</option>
+    <option value="tomato">Tomato</option>
+    <option value="carrot">Carrot</option>
+    <option value="raddish">Raddish</option>
+</select>
+ 
+</body>
+</html>
+ 
+ 
+7)
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+<h2>Reversed Text:</h2>
+<bdo dir="rtl">Web Technology</bdo>
+ 
+<p></p>
+ 
+<a href="http://www.nitt.edu">NITT Webpage</a>
+ 
+</body>
+</html>
+
+
+8)
+
+
+
+ 
+<html lang="en">
+<head>
+    <title>Favorite Car and Colors</title>
+    <style>
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+ 
+<h2>Form</h2>
+ 
+<form action="#" method="post">
+    <!-- Favorite Car Section -->
+    <fieldset>
+        <legend>Choose Your Favorite Car:</legend>
+        <label>
+            <input type="radio" name="car" value="BMW">
+            BMW
+        </label>
+        <label>
+            <input type="radio" name="car" value="BENZ">
+            BENZ
+        </label>
+        <label>
+            <input type="radio" name="car" value="MARUTI">
+            MARUTI
+        </label>
+    </fieldset>
+ 
+    <!-- Favorite Colors Section -->
+    <fieldset>
+        <legend>Choose Your Favorite Colors:</legend>
+        <label>
+            <input type="checkbox" name="color" value="RED">
+            RED
+        </label>
+        <label>
+            <input type="checkbox" name="color" value="GREEN">
+            GREEN
+        </label>
+        <label>
+            <input type="checkbox" name="color" value="VIOLET">
+            VIOLET
+        </label>
+        <label>
+            <input type="checkbox" name="color" value="NAVY">
+            NAVY
+        </label>
+    </fieldset>
+ 
+    
+    <input type="submit" value="Submit">
+</form>
+ 
+</body>
+</html>
+ 
+ 
+9)
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Scrolling Marquee</title>
+    <style>
+        body {
+            background-color:blue;
+            margin: 0;
+            overflow: hidden;
+        }
+ 
+        marquee {
+            height: 50px;
+            background-color: red;
+            color: white;
+            white-space: nowrap;
+            font-size: larger;
+        }
+    </style>
+</head>
+<body>
+ 
+<marquee behavior="scrollamount" direction="right" scrollamount="20">
+    <h3>WELCOME</h3> 
+</marquee>
+ 
+</body>
+</html>
+
+
+10)
+
+ a)
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Framed Web Page</title>
+</head>
+<frameset cols="500,*">
+    <frame src="q2.html" name="firstFrame" />
+    <frame src="q4.html" name="secondFrame" />
+    <noframes>
+        <body>
+            Your browser does not support frames.
+        </body>
+    </noframes>
+</frameset>
+</html>
+ 
+b)
+ 
+ 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Table with Border</title>
+    <style>
+        td {
+            width: 70px;
+            height: 70px;
+        }
+    </style>
+</head>
+<body>
+    <table border="7">
+        <tr>
+            <td> table with border 7</td>
+            <td> </td>
+        </tr>
+        <tr>
+            <td> </td>
+            <td> </td>
+        </tr>
+    </table>
+</body>
+</html>
+ 
+ 
+c)
+ 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Alternate Content for Frameset</title>
+</head>
+<frameset>
+    <frame src="q1.html" name="mainFrame" />
+    <noframes>
+        <body>
+            <p>This browser does not support frames.</p>
+        </body>
+    </noframes>
+</frameset>
+</html>
+ 
+ 
+d)
+ 
+ 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Image Map</title>
+</head>
+<body>
+    <img src="deitel.gif" alt="hello" usemap="#helloMap" />
+    
+    <map name="helloMap">
+        <area shape="rect" coords="0,0,350,400" alt="Hello" title="Hello" href="q3.html">
+    </map>
+</body>
+</body>
+</html>
+
+
+
+
+--------------------------------------------------------------------------
+incase camel doesnt work
+
+<html>
+    <head>
+        <title>Camelid Comparision</title>
+    </head>
+
+    <body>
+       <h1 style="font-size: 30px; ">Table example page</h1>
+   <p style="text-align: center; font-size: 15px;">Here is a more complex
+    sample page</p>
+     <table border="1">
+        <tr style="height : 90px;"></tr>
+        <td rowspan="2">
+            <img src="camel.png" alt=" Image">
+        </td>
+             <td colspan="4" style="text-align: center;">
+       <h style="font-size: 40px;"><b>Camelid comparision</h>
+       </h>
+       <p><b>Approximate as of 9/2002</b></p>
+     </td>
+     </tr>
+     <tr style="height: 30px;">
+       <td><b># of Humps</b></td>
+       <td><b>Indigeneous region</b></td>
+       <td><b>Spits ?</b></td>
+       <td><b>Produces Wool?</b></td>
+     </tr>
+     <tr>
+       <td style="text-align: end;"><b>Camels (bactrian)</b></td>
+       <td>2</td>
+       <td>Africa/Asia</td>
+       <td rowspan="2">Llama</td>
+       <td rowspan="2">Llama</td>
+     </tr>
+     <tr>
+       <td style="text-align: end;"><b>Llamas</b></td>
+       <td>1</td>
+       <td>Andes Mountin</td>
+     </tr>
+     </table>
+    </body>
+</html>

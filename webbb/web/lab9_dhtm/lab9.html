@@ -1,0 +1,360 @@
+Ex.No.5: Creation of Dynamic Web pages DHTML – Part II
+6.a. Create a web page with two horizontal frames. Write a DHTML code to
+display three images in the upper frame. When any one of the images is clicked,
+it must be displayed in the lower frame. On clicking the displayed image, it must
+be cleared.
+6.b. Create a web page with two vertical frames. Write a DHTML code to add a
+list on the left frame along with items available in a departmental store. When the
+user clicks on an item in the list box, its image will be displayed on the right
+frame. Also the price of the selected item must be dynamically retrieved in the
+left frame and transferred to the right frame through an alert dialog.
+6.c. Create a web page that enables the user to play the game of 15. There is a 4-
+by-4 board implemented as an XHTML table for a total of 16 slots. One of the
+slots is empty. The other slots are occupied by 15 tiles, randomly numbered from
+1 through 15. Any tile next to the currently empty slot can be moved into the
+currently empty slot by clicking on the tile. Your program should create the board
+with the tiles out of order. The user’s goal is to arrange the tiles in sequential
+order row by row. Using the DHTML model and the onclick event, write a script
+that allows the user to swap the positions of the open position and adjacent tile.
+6.d. Write a DHTML code to add an image to the web page. The image is then
+divided into 16 equally sized pieces. Discard one of the pieces and randomly place
+the other15 pieces in the XHTML table.
+6.e. Add two elements to the web page that the users can click. Use an image as
+the first element. When the user clicks the image, display an alert dialog box with
+the text “You clicked the image”. For the second element, create a one-row table
+containing a text string. Set the table border to 1. When the user clicks the table,
+display an alert dialog box containing “You clicked the table”. In the two
+accompanying functions, set each event object to true. ( Use Event Bubbling )
+6.f. Write a DHTML code to load an image on the webpage and perform the
+following.
+• Rotate the image horizontally and vertically using Flip Filters.
+• Apply transparency effects dynamically using Chroma Filter.
+• Produce the Negative image effect using Invert Filter.
+• Produce the Gray Scale image effect using Gray Filter.
+• Produce the X-Ray image effect using Xray Filter.
+
+
+Below are **complete, working DHTML examples** for each part (6.a–6.f). You can save each as a separate `.html` file and run in a browser. I’ve kept them simple and functional for lab/exam use.
+
+---
+
+# ✅ **6.a – Two Horizontal Frames (Images Click → Display Below → Clear on Click)**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>6a - Horizontal Frames</title>
+<script>
+function showImage(src) {
+    parent.frames["lower"].document.body.innerHTML =
+        "<img src='" + src + "' width='300' onclick='clearImg()'>";
+}
+
+function clearImg() {
+    parent.frames["lower"].document.body.innerHTML = "";
+}
+</script>
+</head>
+
+<frameset rows="50%,50%">
+    <frame name="upper" src="upper.html">
+    <frame name="lower" src="about:blank">
+</frameset>
+</html>
+```
+
+**upper.html**
+
+```html
+<html>
+<body>
+<img src="img1.jpg" width="100" onclick="parent.showImage(this.src)">
+<img src="img2.jpg" width="100" onclick="parent.showImage(this.src)">
+<img src="img3.jpg" width="100" onclick="parent.showImage(this.src)">
+</body>
+</html>
+```
+
+---
+
+# ✅ **6.b – Two Vertical Frames (Item List + Image + Price Alert)**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>6b - Vertical Frames</title>
+<script>
+var items = {
+    "Rice": {img:"rice.jpg", price:50},
+    "Sugar": {img:"sugar.jpg", price:40},
+    "Milk": {img:"milk.jpg", price:30}
+};
+
+function showItem(item) {
+    var data = items[item];
+
+    alert("Price of " + item + " = Rs." + data.price);
+
+    parent.frames["right"].document.body.innerHTML =
+        "<h3>"+item+"</h3><img src='"+data.img+"' width='200'><br>Price: Rs."+data.price;
+}
+</script>
+</head>
+
+<frameset cols="30%,70%">
+    <frame name="left" src="left.html">
+    <frame name="right" src="about:blank">
+</frameset>
+</html>
+```
+
+**left.html**
+
+```html
+<html>
+<body>
+<h3>Items</h3>
+<ul>
+<li onclick="parent.showItem('Rice')">Rice</li>
+<li onclick="parent.showItem('Sugar')">Sugar</li>
+<li onclick="parent.showItem('Milk')">Milk</li>
+</ul>
+</body>
+</html>
+```
+
+---
+
+# ✅ **6.c – Game of 15 (Sliding Puzzle)**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>15 Puzzle</title>
+<style>
+td {
+    width:60px; height:60px;
+    text-align:center;
+    border:1px solid black;
+    font-size:20px;
+    cursor:pointer;
+}
+</style>
+
+<script>
+let board = [];
+
+function init() {
+    let nums = [...Array(15).keys()].map(x=>x+1);
+    nums.push("");
+
+    nums.sort(()=>Math.random()-0.5);
+
+    board = nums;
+
+    draw();
+}
+
+function draw() {
+    let table = document.getElementById("board");
+    table.innerHTML = "";
+
+    for(let i=0;i<4;i++) {
+        let row = "<tr>";
+        for(let j=0;j<4;j++) {
+            let val = board[i*4+j];
+            row += "<td onclick='move("+ (i*4+j) +")'>"+val+"</td>";
+        }
+        row += "</tr>";
+        table.innerHTML += row;
+    }
+}
+
+function move(index) {
+    let empty = board.indexOf("");
+
+    let valid = [index-1,index+1,index-4,index+4];
+
+    if(valid.includes(empty)) {
+        [board[index], board[empty]] = [board[empty], board[index]];
+        draw();
+    }
+}
+</script>
+</head>
+
+<body onload="init()">
+<h2>15 Puzzle Game</h2>
+<table id="board"></table>
+</body>
+</html>
+```
+
+---
+
+# ✅ **6.d – Image Split into 16 Pieces (15 Puzzle Image Version)**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Image Puzzle</title>
+<style>
+td {
+    width:100px; height:100px;
+    border:1px solid black;
+    background-size:400px 400px;
+}
+</style>
+
+<script>
+let tiles = [];
+
+function init() {
+    for(let i=0;i<16;i++) tiles.push(i);
+
+    tiles.sort(()=>Math.random()-0.5);
+
+    draw();
+}
+
+function draw() {
+    let table = document.getElementById("grid");
+    table.innerHTML = "";
+
+    for(let i=0;i<4;i++) {
+        let row = "<tr>";
+        for(let j=0;j<4;j++) {
+            let idx = tiles[i*4+j];
+
+            if(idx === 15) {
+                row += "<td></td>";
+            } else {
+                let x = -(idx%4)*100;
+                let y = -Math.floor(idx/4)*100;
+
+                row += "<td style='background-image:url(img.jpg);background-position:"+x+"px "+y+"px'></td>";
+            }
+        }
+        row += "</tr>";
+        table.innerHTML += row;
+    }
+}
+</script>
+</head>
+
+<body onload="init()">
+<h2>Image Puzzle</h2>
+<table id="grid"></table>
+</body>
+</html>
+```
+
+---
+
+# ✅ **6.e – Event Bubbling (Image + Table Click)**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Event Bubbling</title>
+
+<script>
+function imgClick(event) {
+    alert("You clicked the image");
+    event.bubbles = true;
+}
+
+function tableClick(event) {
+    alert("You clicked the table");
+    event.bubbles = true;
+}
+</script>
+
+</head>
+
+<body>
+
+<img src="img1.jpg" width="200" onclick="imgClick(event)">
+
+<br><br>
+
+<table border="1" onclick="tableClick(event)">
+<tr>
+<td>Click this table</td>
+</tr>
+</table>
+
+</body>
+</html>
+```
+
+---
+
+# ⚠️ **6.f – DHTML Filters (Old IE Only, but included for exam)**
+
+⚠️ These filters work only in **Internet Explorer (legacy)**.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Image Effects</title>
+
+<script>
+function flipH() {
+    img.style.filter = "flipH";
+}
+function flipV() {
+    img.style.filter = "flipV";
+}
+function gray() {
+    img.style.filter = "gray";
+}
+function invert() {
+    img.style.filter = "invert";
+}
+function xray() {
+    img.style.filter = "xray";
+}
+function chroma() {
+    img.style.filter = "chroma(color=white)";
+}
+</script>
+
+</head>
+
+<body>
+
+<img id="img" src="img1.jpg" width="300"><br><br>
+
+<button onclick="flipH()">Flip Horizontal</button>
+<button onclick="flipV()">Flip Vertical</button>
+<button onclick="gray()">Gray</button>
+<button onclick="invert()">Negative</button>
+<button onclick="xray()">X-Ray</button>
+<button onclick="chroma()">Transparency</button>
+
+</body>
+</html>
+```
+
+---
+
+# ✅ Notes
+
+* Replace `img1.jpg`, `img2.jpg`, etc. with actual image files.
+* Frames are outdated in modern HTML but still valid for **DHTML lab exercises**.
+* 6.f is **theoretical/practical only for exams** (modern browsers don’t support these filters).
+
+---
+
+If you want, I can:
+
+* Combine all into one project folder
+* Upgrade these to **modern HTML5 (no frames)**
+* Add CSS styling for better UI

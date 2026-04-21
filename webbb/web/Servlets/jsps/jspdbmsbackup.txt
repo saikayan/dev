@@ -1,0 +1,491 @@
+Got it — I’ll give you **COMPLETE working JSP + MySQL (phpMyAdmin) programs** for the DB-based questions:
+
+* ✅ e) Employee CRUD
+* ✅ f) FAQ
+* ✅ g) Survey
+* ✅ h) Book CRUD
+
+With:
+
+* File names
+* Where each file goes
+* Full JSP code
+* SQL setup
+* How to run
+
+---
+
+# 🔧 BEFORE YOU START (ONE-TIME SETUP)
+
+## ✅ 1. Start XAMPP
+
+* Start **Apache**
+* Start **MySQL**
+
+---
+
+## ✅ 2. Open phpMyAdmin
+
+```text
+http://localhost/phpmyadmin
+```
+
+---
+
+## ✅ 3. Add MySQL Connector JAR in Eclipse
+
+* Right click project
+  → Build Path
+  → Add External JAR
+  → Select `mysql-connector-j.jar`
+
+---
+
+## ✅ 4. Project Structure
+
+```text
+ProjectName/
+│
+├── WebContent/
+│   ├── *.jsp
+│   ├── *.html
+│   └── WEB-INF/
+│       └── web.xml
+```
+
+---
+
+# ✅ e) EMPLOYEE CRUD (JSP + DB)
+
+---
+
+## 🛢️ DATABASE
+
+```sql
+CREATE DATABASE empdb;
+
+USE empdb;
+
+CREATE TABLE employee (
+  eid INT PRIMARY KEY,
+  ename VARCHAR(50),
+  dept VARCHAR(50),
+  doj DATE,
+  salary INT
+);
+```
+
+---
+
+## 📄 File: `employee.jsp`
+
+📍 `WebContent/`
+
+```jsp
+<%@ page import="java.sql.*" %>
+
+<html>
+<body>
+
+<h2>Employee Management</h2>
+
+<form method="post">
+EID: <input type="text" name="eid"><br>
+Name: <input type="text" name="ename"><br>
+Dept: <input type="text" name="dept"><br>
+DOJ: <input type="date" name="doj"><br>
+Salary: <input type="text" name="salary"><br>
+
+<input type="submit" name="action" value="Insert">
+<input type="submit" name="action" value="Update">
+<input type="submit" name="action" value="Delete">
+</form>
+
+<hr>
+
+<%
+try{
+    Class.forName("com.mysql.cj.jdbc.Driver");
+
+    Connection con = DriverManager.getConnection(
+        "jdbc:mysql://localhost:3306/empdb","root","");
+
+    String action = request.getParameter("action");
+
+    if(action != null){
+
+        PreparedStatement ps;
+
+        if(action.equals("Insert")){
+            ps = con.prepareStatement("INSERT INTO employee VALUES(?,?,?,?,?)");
+            ps.setInt(1,Integer.parseInt(request.getParameter("eid")));
+            ps.setString(2,request.getParameter("ename"));
+            ps.setString(3,request.getParameter("dept"));
+            ps.setDate(4,Date.valueOf(request.getParameter("doj")));
+            ps.setInt(5,Integer.parseInt(request.getParameter("salary")));
+            ps.executeUpdate();
+        }
+
+        if(action.equals("Update")){
+            ps = con.prepareStatement("UPDATE employee SET ename=?,dept=?,doj=?,salary=? WHERE eid=?");
+            ps.setString(1,request.getParameter("ename"));
+            ps.setString(2,request.getParameter("dept"));
+            ps.setDate(3,Date.valueOf(request.getParameter("doj")));
+            ps.setInt(4,Integer.parseInt(request.getParameter("salary")));
+            ps.setInt(5,Integer.parseInt(request.getParameter("eid")));
+            ps.executeUpdate();
+        }
+
+        if(action.equals("Delete")){
+            ps = con.prepareStatement("DELETE FROM employee WHERE eid=?");
+            ps.setInt(1,Integer.parseInt(request.getParameter("eid")));
+            ps.executeUpdate();
+        }
+    }
+
+    Statement st = con.createStatement();
+    ResultSet rs = st.executeQuery("SELECT * FROM employee");
+
+    while(rs.next()){
+%>
+    <p>
+    <%= rs.getInt(1) %> -
+    <%= rs.getString(2) %> -
+    <%= rs.getString(3) %> -
+    <%= rs.getDate(4) %> -
+    <%= rs.getInt(5) %>
+    </p>
+<%
+    }
+
+}catch(Exception e){
+    out.println(e);
+}
+%>
+
+</body>
+</html>
+```
+
+---
+
+# ✅ f) FAQ (JSP + DB)
+
+---
+
+## 🛢️ DATABASE
+
+```sql
+CREATE DATABASE faqdb;
+
+USE faqdb;
+
+CREATE TABLE Topics (
+  topicID INT,
+  topicName VARCHAR(50)
+);
+
+CREATE TABLE FAQ (
+  topicID INT,
+  question VARCHAR(100),
+  answer VARCHAR(100)
+);
+
+INSERT INTO Topics VALUES (1,'Java'),(2,'Servlet');
+
+INSERT INTO FAQ VALUES
+(1,'What is Java?','Programming Language'),
+(2,'What is Servlet?','Server-side Java');
+```
+
+---
+
+## 📄 File: `faq.jsp`
+
+📍 `WebContent/`
+
+```jsp
+<%@ page import="java.sql.*" %>
+
+<html>
+<body>
+
+<h2>FAQ</h2>
+
+<%
+try{
+    Class.forName("com.mysql.cj.jdbc.Driver");
+
+    Connection con = DriverManager.getConnection(
+        "jdbc:mysql://localhost:3306/faqdb","root","");
+
+    Statement st = con.createStatement();
+
+    ResultSet rs = st.executeQuery(
+    "SELECT Topics.topicName, FAQ.question, FAQ.answer " +
+    "FROM Topics JOIN FAQ ON Topics.topicID = FAQ.topicID");
+
+    while(rs.next()){
+%>
+    <h3><%= rs.getString(1) %></h3>
+    Q: <%= rs.getString(2) %><br>
+    A: <%= rs.getString(3) %><br><br>
+<%
+    }
+
+}catch(Exception e){
+    out.println(e);
+}
+%>
+
+</body>
+</html>
+```
+
+---
+
+# ✅ g) SURVEY (JSP + DB)
+
+---
+
+## 🛢️ DATABASE
+
+```sql
+CREATE DATABASE surveydb;
+
+USE surveydb;
+
+CREATE TABLE survey (
+  animal VARCHAR(20),
+  votes INT
+);
+
+INSERT INTO survey VALUES
+('Dog',0),('Cat',0),('Parrot',0),('Cow',0),('None',0);
+```
+
+---
+
+## 📄 File: `Survey.html`
+
+📍 `WebContent/`
+
+```html
+<html>
+<body>
+
+<form action="survey.jsp" method="post">
+<input type="radio" name="animal" value="Dog">Dog<br>
+<input type="radio" name="animal" value="Cat">Cat<br>
+<input type="radio" name="animal" value="Parrot">Parrot<br>
+<input type="radio" name="animal" value="Cow">Cow<br>
+<input type="radio" name="animal" value="None">None<br>
+<input type="submit">
+</form>
+
+</body>
+</html>
+```
+
+---
+
+## 📄 File: `survey.jsp`
+
+📍 `WebContent/`
+
+```jsp
+<%@ page import="java.sql.*" %>
+
+<html>
+<body>
+
+<%
+String animal = request.getParameter("animal");
+
+try{
+    Class.forName("com.mysql.cj.jdbc.Driver");
+
+    Connection con = DriverManager.getConnection(
+        "jdbc:mysql://localhost:3306/surveydb","root","");
+
+    Statement st = con.createStatement();
+
+    if(animal != null){
+        st.executeUpdate("UPDATE survey SET votes=votes+1 WHERE animal='"+animal+"'");
+    }
+
+    ResultSet rs = st.executeQuery("SELECT * FROM survey");
+
+    int total = 0;
+    while(rs.next()){
+        total += rs.getInt("votes");
+    }
+
+    rs = st.executeQuery("SELECT * FROM survey");
+
+    while(rs.next()){
+        int v = rs.getInt("votes");
+        double p = total==0 ? 0 : (v*100.0)/total;
+%>
+        <p><%= rs.getString("animal") %> : <%= p %>%</p>
+<%
+    }
+
+    out.println("Total Votes: " + total);
+
+}catch(Exception e){
+    out.println(e);
+}
+%>
+
+</body>
+</html>
+```
+
+---
+
+# ✅ h) BOOK CRUD (JSP + DB)
+
+---
+
+## 🛢️ DATABASE
+
+```sql
+CREATE DATABASE bookdb;
+
+USE bookdb;
+
+CREATE TABLE book (
+  bid INT PRIMARY KEY,
+  bname VARCHAR(50),
+  author VARCHAR(50),
+  isbn VARCHAR(20),
+  price INT
+);
+```
+
+---
+
+## 📄 File: `book.jsp`
+
+📍 `WebContent/`
+
+```jsp
+<%@ page import="java.sql.*" %>
+
+<html>
+<body>
+
+<h2>Book Management</h2>
+
+<form method="post">
+ID: <input type="text" name="bid"><br>
+Name: <input type="text" name="bname"><br>
+Author: <input type="text" name="author"><br>
+ISBN: <input type="text" name="isbn"><br>
+Price: <input type="text" name="price"><br>
+
+<input type="submit" name="action" value="Insert">
+<input type="submit" name="action" value="Update">
+<input type="submit" name="action" value="Delete">
+</form>
+
+<hr>
+
+<%
+try{
+    Class.forName("com.mysql.cj.jdbc.Driver");
+
+    Connection con = DriverManager.getConnection(
+        "jdbc:mysql://localhost:3306/bookdb","root","");
+
+    String action = request.getParameter("action");
+
+    if(action != null){
+
+        PreparedStatement ps;
+
+        if(action.equals("Insert")){
+            ps = con.prepareStatement("INSERT INTO book VALUES(?,?,?,?,?)");
+            ps.setInt(1,Integer.parseInt(request.getParameter("bid")));
+            ps.setString(2,request.getParameter("bname"));
+            ps.setString(3,request.getParameter("author"));
+            ps.setString(4,request.getParameter("isbn"));
+            ps.setInt(5,Integer.parseInt(request.getParameter("price")));
+            ps.executeUpdate();
+        }
+
+        if(action.equals("Update")){
+            ps = con.prepareStatement("UPDATE book SET bname=?,author=?,isbn=?,price=? WHERE bid=?");
+            ps.setString(1,request.getParameter("bname"));
+            ps.setString(2,request.getParameter("author"));
+            ps.setString(3,request.getParameter("isbn"));
+            ps.setInt(4,Integer.parseInt(request.getParameter("price")));
+            ps.setInt(5,Integer.parseInt(request.getParameter("bid")));
+            ps.executeUpdate();
+        }
+
+        if(action.equals("Delete")){
+            ps = con.prepareStatement("DELETE FROM book WHERE bid=?");
+            ps.setInt(1,Integer.parseInt(request.getParameter("bid")));
+            ps.executeUpdate();
+        }
+    }
+
+    Statement st = con.createStatement();
+    ResultSet rs = st.executeQuery("SELECT * FROM book");
+
+    while(rs.next()){
+%>
+    <p>
+    <%= rs.getInt(1) %> -
+    <%= rs.getString(2) %> -
+    <%= rs.getString(3) %> -
+    <%= rs.getString(4) %> -
+    <%= rs.getInt(5) %>
+    </p>
+<%
+    }
+
+}catch(Exception e){
+    out.println(e);
+}
+%>
+
+</body>
+</html>
+```
+
+---
+
+# 🚀 HOW TO RUN (FINAL)
+
+1. Start Tomcat
+2. Open:
+
+```text
+http://localhost:8080/ProjectName/employee.jsp
+http://localhost:8080/ProjectName/faq.jsp
+http://localhost:8080/ProjectName/Survey.html
+http://localhost:8080/ProjectName/book.jsp
+```
+
+---
+
+# 🔥 FINAL EXAM TIP
+
+If DB fails:
+👉 Switch to **NO-DB JSP version**
+
+Say:
+
+> “Same logic implemented without JDBC due to environment issue.”
+
+---
+
+If you want next:
+✅ Viva questions (very likely)
+✅ 5 mark theory answers (JSP lifecycle, implicit objects)
+✅ Diagram explanations
+
+Just tell 👍

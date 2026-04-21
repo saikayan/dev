@@ -1,0 +1,534 @@
+Perfect — I’ll keep **exact same style** as your servlet answers:
+
+* ✅ File names clearly shown
+* ✅ Where each file goes
+* ✅ HTML + JSP code
+* ✅ `web.xml` (only where needed)
+* ✅ DB + NON-DB alternatives where needed
+* ✅ Step-by-step run instructions
+
+---
+
+# 🔧 COMMON STRUCTURE (JSP PROJECT)
+
+```
+ProjectName/
+│
+├── WebContent/
+│   ├── *.jsp        → JSP files
+│   ├── *.html       → HTML files
+│   └── WEB-INF/
+│       └── web.xml
+```
+
+👉 JSP files go directly inside `WebContent/` (NOT inside `src`)
+
+---
+
+# ✅ a) HELLO WORLD + DATE TIME
+
+## 📄 File: `hello.jsp`
+
+📍 `WebContent/`
+
+```jsp
+<%@ page import="java.util.Date" %>
+
+<html>
+<body>
+
+<h1>HELLO WORLD</h1>
+
+<p>Current Date and Time: <%= new Date() %></p>
+
+</body>
+</html>
+```
+
+---
+
+### ▶️ Run:
+
+```
+http://localhost:8080/ProjectName/hello.jsp
+```
+
+---
+
+# ✅ b) SORT NAMES
+
+## 📄 File: `sort.jsp`
+
+📍 `WebContent/`
+
+```jsp
+<%@ page import="java.util.*" %>
+
+<html>
+<body>
+
+<%
+String[] names = {"Zara", "Arun", "Mohan", "Kiran"};
+
+Arrays.sort(names);
+%>
+
+<h2>Sorted Names:</h2>
+
+<%
+for(String n : names){
+    out.println(n + "<br>");
+}
+%>
+
+</body>
+</html>
+```
+
+---
+
+# ✅ c) FORM PARAMETERS
+
+## 📄 File: `EmployeeForm.html`
+
+📍 `WebContent/`
+
+```html
+<html>
+<body>
+
+<form action="emp.jsp" method="post">
+Name: <input type="text" name="name"><br>
+ID: <input type="text" name="id"><br>
+DOB: <input type="date" name="dob"><br>
+Department: <input type="text" name="dept"><br>
+Salary: <input type="text" name="salary"><br>
+Email: <input type="email" name="email"><br>
+<input type="submit">
+</form>
+
+</body>
+</html>
+```
+
+---
+
+## 📄 File: `emp.jsp`
+
+📍 `WebContent/`
+
+```jsp
+<%@ page import="java.util.*" %>
+
+<html>
+<body>
+
+<h2>Form Data:</h2>
+
+<%
+Enumeration<String> params = request.getParameterNames();
+
+while(params.hasMoreElements()){
+    String name = params.nextElement();
+    String value = request.getParameter(name);
+    out.println(name + " : " + value + "<br>");
+}
+%>
+
+</body>
+</html>
+```
+
+---
+
+# ✅ d) VISIT COUNTER (SESSION)
+
+## 📄 File: `visit.jsp`
+
+📍 `WebContent/`
+
+```jsp
+<html>
+<body>
+
+<%
+Integer count = (Integer) session.getAttribute("count");
+
+if(count == null){
+    count = 1;
+} else {
+    count++;
+}
+
+session.setAttribute("count", count);
+%>
+
+<h2>Number of Visits: <%= count %></h2>
+
+</body>
+</html>
+```
+
+---
+
+# ✅ e) EMPLOYEE DB (JDBC)
+
+## 🛢️ DB SETUP (phpMyAdmin)
+
+```sql
+CREATE DATABASE empdb;
+
+USE empdb;
+
+CREATE TABLE employee (
+  eid INT,
+  ename VARCHAR(50),
+  dept VARCHAR(50),
+  doj DATE,
+  salary INT
+);
+```
+
+---
+
+## 📄 File: `employee.jsp`
+
+📍 `WebContent/`
+
+```jsp
+<%@ page import="java.sql.*" %>
+
+<html>
+<body>
+
+<h2>Employee Table</h2>
+
+<%
+try {
+    Class.forName("com.mysql.cj.jdbc.Driver");
+
+    Connection con = DriverManager.getConnection(
+        "jdbc:mysql://localhost:3306/empdb","root","");
+
+    Statement st = con.createStatement();
+
+    ResultSet rs = st.executeQuery("SELECT * FROM employee");
+
+    while(rs.next()){
+%>
+        <p>
+        <%= rs.getInt("eid") %> -
+        <%= rs.getString("ename") %> -
+        <%= rs.getString("dept") %> -
+        <%= rs.getDate("doj") %> -
+        <%= rs.getInt("salary") %>
+        </p>
+<%
+    }
+
+    con.close();
+} catch(Exception e){
+    out.println(e);
+}
+%>
+
+</body>
+</html>
+```
+
+---
+
+## ⚠️ NO-DB VERSION (SAFE FOR EXAM)
+
+```jsp
+<html>
+<body>
+
+<h2>Employee Table</h2>
+
+<%
+String[][] data = {
+ {"1","Arun","IT","2022-01-01","50000"},
+ {"2","Mohan","HR","2023-02-01","40000"}
+};
+
+for(int i=0;i<data.length;i++){
+    out.println(Arrays.toString(data[i]) + "<br>");
+}
+%>
+
+</body>
+</html>
+```
+
+---
+
+# ✅ f) FAQ (JSP)
+
+## 🛢️ SAME DB as Servlet FAQ
+
+---
+
+## 📄 File: `faq.jsp`
+
+```jsp
+<%@ page import="java.sql.*" %>
+
+<html>
+<body>
+
+<h2>FAQ</h2>
+
+<%
+try{
+    Class.forName("com.mysql.cj.jdbc.Driver");
+
+    Connection con = DriverManager.getConnection(
+        "jdbc:mysql://localhost:3306/faqdb","root","");
+
+    Statement st = con.createStatement();
+
+    ResultSet rs = st.executeQuery(
+    "SELECT Topics.topicName, FAQ.question, FAQ.answer " +
+    "FROM Topics JOIN FAQ ON Topics.topicID=FAQ.topicID");
+
+    while(rs.next()){
+%>
+        <h3><%= rs.getString(1) %></h3>
+        Q: <%= rs.getString(2) %><br>
+        A: <%= rs.getString(3) %><br><br>
+<%
+    }
+
+    con.close();
+}catch(Exception e){
+    out.println(e);
+}
+%>
+
+</body>
+</html>
+```
+
+---
+
+## ⚠️ NO-DB VERSION
+
+```jsp
+<html>
+<body>
+
+<h2>FAQ</h2>
+
+<%
+String[][] faq = {
+ {"Java","What is Java?","Programming language"},
+ {"Servlet","What is Servlet?","Server-side Java"}
+};
+
+for(int i=0;i<faq.length;i++){
+%>
+    <h3><%= faq[i][0] %></h3>
+    Q: <%= faq[i][1] %><br>
+    A: <%= faq[i][2] %><br><br>
+<%
+}
+%>
+
+</body>
+</html>
+```
+
+---
+
+# ✅ g) SURVEY (JSP)
+
+## 📄 File: `Survey.html`
+
+```html
+<html>
+<body>
+
+<form action="survey.jsp" method="post">
+<input type="radio" name="animal" value="Dog">Dog<br>
+<input type="radio" name="animal" value="Cat">Cat<br>
+<input type="radio" name="animal" value="Parrot">Parrot<br>
+<input type="radio" name="animal" value="Cow">Cow<br>
+<input type="radio" name="animal" value="None">None<br>
+<input type="submit">
+</form>
+
+</body>
+</html>
+```
+
+---
+
+## 📄 File: `survey.jsp` (NO-DB VERSION)
+
+```jsp
+<html>
+<body>
+
+<%
+Integer dog = (Integer)application.getAttribute("dog");
+Integer cat = (Integer)application.getAttribute("cat");
+
+if(dog == null){
+    dog = cat = 0;
+}
+
+String animal = request.getParameter("animal");
+
+if("Dog".equals(animal)) dog++;
+else if("Cat".equals(animal)) cat++;
+
+application.setAttribute("dog", dog);
+application.setAttribute("cat", cat);
+
+int total = dog + cat;
+%>
+
+Dog: <%= dog %><br>
+Cat: <%= cat %><br>
+Total: <%= total %>
+
+</body>
+</html>
+```
+
+---
+
+# ✅ h) BOOK TABLE (JDBC)
+
+## 🛢️ DB
+
+```sql
+CREATE DATABASE bookdb;
+
+USE bookdb;
+
+CREATE TABLE book (
+  bid INT,
+  bname VARCHAR(50),
+  author VARCHAR(50),
+  isbn VARCHAR(20),
+  price INT
+);
+```
+
+---
+
+## 📄 File: `book.jsp`
+
+```jsp
+<%@ page import="java.sql.*" %>
+
+<html>
+<body>
+
+<h2>Book Table</h2>
+
+<%
+try{
+    Class.forName("com.mysql.cj.jdbc.Driver");
+
+    Connection con = DriverManager.getConnection(
+        "jdbc:mysql://localhost:3306/bookdb","root","");
+
+    Statement st = con.createStatement();
+
+    ResultSet rs = st.executeQuery("SELECT * FROM book");
+
+    while(rs.next()){
+%>
+    <p>
+    <%= rs.getInt("bid") %> -
+    <%= rs.getString("bname") %> -
+    <%= rs.getString("author") %> -
+    <%= rs.getString("isbn") %> -
+    <%= rs.getInt("price") %>
+    </p>
+<%
+    }
+
+}catch(Exception e){
+    out.println(e);
+}
+%>
+
+</body>
+</html>
+```
+
+---
+
+## ⚠️ NO-DB VERSION
+
+```jsp
+<html>
+<body>
+
+<h2>Book Table</h2>
+
+<%
+String[][] books = {
+ {"1","Java","James","111","500"},
+ {"2","Servlet","Sun","222","400"}
+};
+
+for(int i=0;i<books.length;i++){
+    out.println(Arrays.toString(books[i]) + "<br>");
+}
+%>
+
+</body>
+</html>
+```
+
+---
+
+# 🚀 HOW TO RUN (FOR ALL JSP)
+
+### ✅ Steps:
+
+1. Start Tomcat
+2. Right-click project → Run on Server
+3. Open browser
+
+```
+http://localhost:8080/ProjectName/file.jsp
+```
+
+---
+
+# ⚠️ web.xml (IMPORTANT NOTE)
+
+👉 JSP **does NOT require mapping** like servlets.
+
+But if your exam demands it:
+
+## 📄 `web.xml`
+
+```xml
+<web-app>
+</web-app>
+```
+
+---
+
+# 🔥 FINAL EXAM TIPS
+
+✔ JSP = HTML + Java
+✔ No need servlet mapping
+✔ Use `<%= %>` for output
+✔ Use `<% %>` for logic
+
+---
+
+If you want:
+✅ Viva questions (very predictable)
+✅ Differences: JSP vs Servlet (common question)
+✅ Common mistakes that lose marks
+
+Just tell 👍

@@ -1,0 +1,471 @@
+Great — here’s **Part 2 (e → i)** with full working code, DB setup (phpMyAdmin), file locations, and `web.xml` for each.
+
+---
+
+# ✅ e) COOKIE BASED LANGUAGE SELECTION
+
+## 📄 File: `CookieSelectLanguage.html`
+
+📍 `WebContent/`
+
+```html
+<html>
+<body>
+<form action="cookie" method="post">
+    <input type="radio" name="lang" value="C">C<br>
+    <input type="radio" name="lang" value="C++">C++<br>
+    <input type="radio" name="lang" value="Java">Java<br>
+    <input type="radio" name="lang" value="VB6">VB 6<br>
+    <input type="submit" value="Submit">
+</form>
+
+<a href="cookie">View Book Recommendations</a>
+</body>
+</html>
+```
+
+---
+
+## 📄 File: `CookieServlet.java`
+
+📍 `src/com/example/`
+
+```java
+package com.example;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class CookieServlet extends HttpServlet {
+
+    protected void doPost(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
+        String lang = req.getParameter("lang");
+
+        Cookie c = new Cookie("language", lang);
+        res.addCookie(c);
+
+        PrintWriter out = res.getWriter();
+        out.println("<html><body>");
+        out.println("Cookie Added: " + lang);
+        out.println("<br><a href='cookie'>View Recommendations</a>");
+        out.println("</body></html>");
+    }
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
+        Cookie[] cookies = req.getCookies();
+
+        PrintWriter out = res.getWriter();
+        out.println("<html><body>");
+
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if (c.getName().equals("language")) {
+                    out.println("Recommended Book for " + c.getValue() + "<br>");
+                }
+            }
+        }
+
+        out.println("</body></html>");
+    }
+}
+```
+
+---
+
+## 📄 `web.xml`
+
+```xml
+<servlet>
+  <servlet-name>CookieServlet</servlet-name>
+  <servlet-class>com.example.CookieServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+  <servlet-name>CookieServlet</servlet-name>
+  <url-pattern>/cookie</url-pattern>
+</servlet-mapping>
+```
+
+---
+
+# ✅ f) DYNAMIC FAQ (DATABASE – phpMyAdmin)
+
+## 🛢️ STEP 1: DATABASE SETUP (phpMyAdmin)
+
+1. Open phpMyAdmin
+2. Create DB: `faqdb`
+
+### Run SQL:
+
+```sql
+CREATE TABLE Topics (
+  topicID INT PRIMARY KEY AUTO_INCREMENT,
+  topicName VARCHAR(100)
+);
+
+CREATE TABLE FAQ (
+  topicID INT,
+  question VARCHAR(255),
+  answer VARCHAR(255)
+);
+
+INSERT INTO Topics VALUES (1, 'Java'), (2, 'Servlet');
+
+INSERT INTO FAQ VALUES
+(1, 'What is Java?', 'Programming language'),
+(2, 'What is Servlet?', 'Server-side Java program');
+```
+
+---
+
+## 📄 File: `FAQServlet.java`
+
+📍 `src/com/example/`
+
+```java
+package com.example;
+
+import java.io.*;
+import java.sql.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class FAQServlet extends HttpServlet {
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
+        PrintWriter out = res.getWriter();
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/faqdb", "root", "");
+
+            Statement st = con.createStatement();
+
+            ResultSet rs = st.executeQuery(
+                "SELECT Topics.topicName, FAQ.question, FAQ.answer " +
+                "FROM Topics JOIN FAQ ON Topics.topicID = FAQ.topicID");
+
+            out.println("<html><body>");
+
+            while (rs.next()) {
+                out.println("<h3>" + rs.getString(1) + "</h3>");
+                out.println("Q: " + rs.getString(2) + "<br>");
+                out.println("A: " + rs.getString(3) + "<br><br>");
+            }
+
+            out.println("</body></html>");
+            con.close();
+
+        } catch (Exception e) {
+            out.println(e);
+        }
+    }
+}
+```
+
+---
+
+## 📄 `web.xml`
+
+```xml
+<servlet>
+  <servlet-name>FAQServlet</servlet-name>
+  <servlet-class>com.example.FAQServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+  <servlet-name>FAQServlet</servlet-name>
+  <url-pattern>/faq</url-pattern>
+</servlet-mapping>
+```
+
+---
+
+⚠️ **IMPORTANT**
+
+* Add MySQL Connector JAR to project:
+
+  * Right click project → Build Path → Add External JAR → select `mysql-connector-j.jar`
+
+---
+
+# ✅ g) SESSION TRACKING
+
+## 📄 File: `SessionSelectLanguage.html`
+
+```html
+<html>
+<body>
+<form action="session" method="post">
+    <input type="radio" name="lang" value="C">C<br>
+    <input type="radio" name="lang" value="Java">Java<br>
+    <input type="submit">
+</form>
+</body>
+</html>
+```
+
+---
+
+## 📄 File: `SessionServlet.java`
+
+```java
+package com.example;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class SessionServlet extends HttpServlet {
+
+    protected void doPost(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
+        HttpSession session = req.getSession();
+
+        String lang = req.getParameter("lang");
+
+        session.setAttribute("language", lang);
+
+        PrintWriter out = res.getWriter();
+
+        out.println("<html><body>");
+        out.println("Session ID: " + session.getId() + "<br>");
+        out.println("Language: " + lang + "<br>");
+        out.println("Creation Time: " + session.getCreationTime() + "<br>");
+        out.println("Last Accessed: " + session.getLastAccessedTime());
+        out.println("</body></html>");
+    }
+}
+```
+
+---
+
+## 📄 `web.xml`
+
+```xml
+<servlet>
+  <servlet-name>SessionServlet</servlet-name>
+  <servlet-class>com.example.SessionServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+  <servlet-name>SessionServlet</servlet-name>
+  <url-pattern>/session</url-pattern>
+</servlet-mapping>
+```
+
+---
+
+# ✅ h) SURVEY (DATABASE)
+
+## 🛢️ DB SETUP
+
+```sql
+CREATE DATABASE surveydb;
+
+USE surveydb;
+
+CREATE TABLE survey (
+  animal VARCHAR(20),
+  votes INT
+);
+
+INSERT INTO survey VALUES
+('Dog',0),('Cat',0),('Parrot',0),('Cow',0),('None',0);
+```
+
+---
+
+## 📄 File: `Survey.html`
+
+```html
+<html>
+<body>
+<form action="survey" method="post">
+<input type="radio" name="animal" value="Dog">Dog<br>
+<input type="radio" name="animal" value="Cat">Cat<br>
+<input type="radio" name="animal" value="Parrot">Parrot<br>
+<input type="radio" name="animal" value="Cow">Cow<br>
+<input type="radio" name="animal" value="None">None<br>
+<input type="submit">
+</form>
+</body>
+</html>
+```
+
+---
+
+## 📄 File: `SurveyServlet.java`
+
+```java
+package com.example;
+
+import java.io.*;
+import java.sql.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class SurveyServlet extends HttpServlet {
+
+    protected void doPost(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
+        String animal = req.getParameter("animal");
+
+        PrintWriter out = res.getWriter();
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/surveydb", "root", "");
+
+            Statement st = con.createStatement();
+
+            st.executeUpdate("UPDATE survey SET votes = votes + 1 WHERE animal='" + animal + "'");
+
+            ResultSet rs = st.executeQuery("SELECT * FROM survey");
+
+            int total = 0;
+            while (rs.next()) total += rs.getInt("votes");
+
+            rs = st.executeQuery("SELECT * FROM survey");
+
+            out.println("<html><body>");
+
+            while (rs.next()) {
+                int votes = rs.getInt("votes");
+                double percent = (votes * 100.0) / total;
+                out.println(rs.getString("animal") + " : " + percent + "%<br>");
+            }
+
+            out.println("Total Votes: " + total);
+            out.println("</body></html>");
+
+        } catch (Exception e) {
+            out.println(e);
+        }
+    }
+}
+```
+
+---
+
+## 📄 `web.xml`
+
+```xml
+<servlet>
+  <servlet-name>SurveyServlet</servlet-name>
+  <servlet-class>com.example.SurveyServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+  <servlet-name>SurveyServlet</servlet-name>
+  <url-pattern>/survey</url-pattern>
+</servlet-mapping>
+```
+
+---
+
+# ✅ i) CHECKBOX (doPost)
+
+## 📄 File: `Fruits.html`
+
+```html
+<html>
+<body>
+<form action="fruit" method="post">
+<input type="checkbox" name="fruit" value="Apple">Apple<br>
+<input type="checkbox" name="fruit" value="Orange">Orange<br>
+<input type="checkbox" name="fruit" value="Grapes">Grapes<br>
+<input type="checkbox" name="fruit" value="Mango">Mango<br>
+<input type="checkbox" name="fruit" value="Lemon">Lemon<br>
+<input type="submit">
+</form>
+</body>
+</html>
+```
+
+---
+
+## 📄 File: `FruitServlet.java`
+
+```java
+package com.example;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class FruitServlet extends HttpServlet {
+
+    protected void doPost(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
+        String[] fruits = req.getParameterValues("fruit");
+
+        PrintWriter out = res.getWriter();
+        out.println("<html><body>");
+
+        if (fruits != null) {
+            for (String f : fruits) {
+                out.println(f + "<br>");
+            }
+        }
+
+        out.println("</body></html>");
+    }
+}
+```
+
+---
+
+## 📄 `web.xml`
+
+```xml
+<servlet>
+  <servlet-name>FruitServlet</servlet-name>
+  <servlet-class>com.example.FruitServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+  <servlet-name>FruitServlet</servlet-name>
+  <url-pattern>/fruit</url-pattern>
+</servlet-mapping>
+```
+
+---
+
+# 🔥 FINAL NOTES (VERY IMPORTANT FOR EXAM)
+
+✔ Always:
+
+* Start Tomcat
+* Right-click project → Run on Server
+* URL format:
+
+```
+http://localhost:8080/ProjectName/file.html
+```
+
+✔ Add MySQL Connector for DB programs
+✔ Keep `web.xml` inside `WEB-INF`
+
+---
+
+If you want, I can also give:
+✅ Viva questions + answers
+✅ Common errors & fixes (Tomcat issues, 404, DB errors)
+✅ Diagram explanations for exam
+
+Just tell 👍

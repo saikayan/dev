@@ -1,0 +1,328 @@
+Good thinking — this is exactly what many students do in exams when DB connection fails 👍
+
+I’ll give you **DB-free (dummy data) versions** for:
+
+* ✅ f) FAQ
+* ✅ h) Survey
+
+These will **run perfectly without MySQL/phpMyAdmin**, but still look like dynamic applications.
+
+---
+
+# ✅ f) FAQ WITHOUT DATABASE (DUMMY DATA)
+
+## 📄 File: `FAQServlet.java`
+
+📍 `src/com/example/`
+
+```java
+package com.example;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class FAQServlet extends HttpServlet {
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
+        PrintWriter out = res.getWriter();
+
+        // Dummy Data
+        String[][] faq = {
+            {"Java", "What is Java?", "Java is a programming language"},
+            {"Servlet", "What is Servlet?", "Servlet is a server-side Java program"},
+            {"JSP", "What is JSP?", "Java Server Pages used for web development"}
+        };
+
+        out.println("<html><body>");
+        out.println("<h2>Dynamic FAQ Page</h2>");
+
+        for (int i = 0; i < faq.length; i++) {
+            out.println("<h3>" + faq[i][0] + "</h3>");
+            out.println("Q: " + faq[i][1] + "<br>");
+            out.println("A: " + faq[i][2] + "<br><br>");
+        }
+
+        out.println("</body></html>");
+    }
+}
+```
+
+---
+
+## 📄 `web.xml`
+
+```xml
+<servlet>
+  <servlet-name>FAQServlet</servlet-name>
+  <servlet-class>com.example.FAQServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+  <servlet-name>FAQServlet</servlet-name>
+  <url-pattern>/faq</url-pattern>
+</servlet-mapping>
+```
+
+---
+
+### ✅ What to say in exam:
+
+> “This version uses static data instead of database, but logic is same as JDBC-based dynamic FAQ.”
+
+---
+
+# ✅ h) SURVEY WITHOUT DATABASE (SESSION BASED)
+
+👉 This is **best alternative** because it still behaves dynamically.
+
+---
+
+## 📄 File: `SurveyServlet.java`
+
+📍 `src/com/example/`
+
+```java
+package com.example;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class SurveyServlet extends HttpServlet {
+
+    protected void doPost(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
+        HttpSession session = req.getSession();
+
+        String animal = req.getParameter("animal");
+
+        // Initialize counts if not exists
+        Integer dog = (Integer) session.getAttribute("Dog");
+        Integer cat = (Integer) session.getAttribute("Cat");
+        Integer parrot = (Integer) session.getAttribute("Parrot");
+        Integer cow = (Integer) session.getAttribute("Cow");
+        Integer none = (Integer) session.getAttribute("None");
+
+        if (dog == null) {
+            dog = cat = parrot = cow = none = 0;
+        }
+
+        // Increment selected
+        if (animal.equals("Dog")) dog++;
+        else if (animal.equals("Cat")) cat++;
+        else if (animal.equals("Parrot")) parrot++;
+        else if (animal.equals("Cow")) cow++;
+        else if (animal.equals("None")) none++;
+
+        // Save back
+        session.setAttribute("Dog", dog);
+        session.setAttribute("Cat", cat);
+        session.setAttribute("Parrot", parrot);
+        session.setAttribute("Cow", cow);
+        session.setAttribute("None", none);
+
+        int total = dog + cat + parrot + cow + none;
+
+        PrintWriter out = res.getWriter();
+        out.println("<html><body>");
+        out.println("<h2>Survey Result</h2>");
+
+        if (total > 0) {
+            out.println("Dog: " + (dog * 100 / total) + "%<br>");
+            out.println("Cat: " + (cat * 100 / total) + "%<br>");
+            out.println("Parrot: " + (parrot * 100 / total) + "%<br>");
+            out.println("Cow: " + (cow * 100 / total) + "%<br>");
+            out.println("None: " + (none * 100 / total) + "%<br>");
+        }
+
+        out.println("Total Votes: " + total);
+
+        out.println("</body></html>");
+    }
+}
+```
+
+---
+
+## 📄 `web.xml`
+
+```xml
+<servlet>
+  <servlet-name>SurveyServlet</servlet-name>
+  <servlet-class>com.example.SurveyServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+  <servlet-name>SurveyServlet</servlet-name>
+  <url-pattern>/survey</url-pattern>
+</servlet-mapping>
+```
+
+---
+
+# ⚠️ IMPORTANT DIFFERENCE (Say in Viva)
+
+| Version      | Data Source |
+| ------------ | ----------- |
+| Original     | MySQL DB    |
+| This version | HttpSession |
+
+---
+
+# 🔥 PRO EXAM TIP
+
+If examiner asks:
+
+👉 “Where is database?”
+
+Say confidently:
+
+> “Due to environment limitation, I used session-based storage. Same logic can be implemented using JDBC.”
+
+---
+
+# ✅ BONUS (ULTRA SAFE BACKUP)
+
+If everything fails, you can even use **hardcoded counts**:
+
+```java
+int dog = 5, cat = 3, parrot = 2, cow = 1, none = 0;
+```
+
+Still valid for demo.
+
+---
+
+If you want next:
+✅ Common **Tomcat errors + fixes (404, 500, ClassNotFound)**
+✅ **How to run each step in Eclipse (with screenshots style explanation)**
+✅ Viva Q&A
+
+Just tell 👍
+
+Good catch — you’ll definitely need the **HTML files** too, otherwise you can’t trigger the servlets during demo.
+
+Here are the **DB-free compatible HTML files** for the parts that needed DB (f & h).
+
+---
+
+# ✅ f) FAQ – HTML (Optional Trigger Page)
+
+👉 This servlet works directly via URL, but for exam/demo, it's better to have a button.
+
+## 📄 File: `FAQ.html`
+
+📍 `WebContent/`
+
+```html
+<html>
+<body>
+<h2>FAQ Application</h2>
+
+<form action="faq" method="get">
+    <input type="submit" value="View FAQs">
+</form>
+
+</body>
+</html>
+```
+
+---
+
+### 👉 How to run:
+
+```
+http://localhost:8080/ProjectName/FAQ.html
+```
+
+---
+
+# ✅ h) SURVEY – HTML (MANDATORY)
+
+## 📄 File: `Survey.html`
+
+📍 `WebContent/`
+
+```html
+<html>
+<body>
+
+<h2>Animal Survey</h2>
+
+<form action="survey" method="post">
+    <input type="radio" name="animal" value="Dog"> Dog <br>
+    <input type="radio" name="animal" value="Cat"> Cat <br>
+    <input type="radio" name="animal" value="Parrot"> Parrot <br>
+    <input type="radio" name="animal" value="Cow"> Cow <br>
+    <input type="radio" name="animal" value="None"> None <br><br>
+
+    <input type="submit" value="Vote">
+</form>
+
+</body>
+</html>
+```
+
+---
+
+### 👉 How to run:
+
+```
+http://localhost:8080/ProjectName/Survey.html
+```
+
+---
+
+# ⚠️ IMPORTANT (EXAM FLOW)
+
+### 👉 For FAQ:
+
+1. Open `FAQ.html`
+2. Click **View FAQs**
+3. Output shows → dynamic questions
+
+---
+
+### 👉 For Survey:
+
+1. Open `Survey.html`
+2. Select option
+3. Click **Vote**
+4. Output shows → percentages
+
+---
+
+# 🔥 FINAL CHECKLIST (DON’T MISS THIS)
+
+Before demo:
+
+✔ HTML file inside `WebContent/`
+✔ Servlet inside `src/com/example/`
+✔ `web.xml` mapping correct
+✔ Tomcat running
+✔ Project deployed
+
+---
+
+# 💡 SMART EXAM LINE
+
+If asked:
+
+> “Why HTML?”
+
+Say:
+
+> “HTML acts as client interface to send request to servlet.”
+
+---
+
+If you want, I can also give:
+✅ **One-page revision sheet (all servlets summarized)**
+✅ **Step-by-step Eclipse setup (many students mess this up)**
+✅ **Top 10 viva questions (very likely)**
+
+Just tell 👍

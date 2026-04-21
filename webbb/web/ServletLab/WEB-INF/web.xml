@@ -1,0 +1,87 @@
+<web-app>
+
+<!-- Hello Servlet -->
+
+<servlet>
+    <servlet-name>HelloServlet</servlet-name>
+    <servlet-class>HelloServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>HelloServlet</servlet-name>
+    <url-pattern>/hello</url-pattern>
+</servlet-mapping>
+
+
+<!-- Welcome Servlet -->
+
+<servlet>
+    <servlet-name>WelcomeServlet</servlet-name>
+    <servlet-class>WelcomeServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>WelcomeServlet</servlet-name>
+    <url-pattern>/welcome</url-pattern>
+</servlet-mapping>
+
+
+<!-- Employee Servlet -->
+
+<servlet>
+    <servlet-name>EmployeeServlet</servlet-name>
+    <servlet-class>EmployeeServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>EmployeeServlet</servlet-name>
+    <url-pattern>/employee</url-pattern>
+</servlet-mapping>
+
+
+<!-- Color Servlet -->
+
+<servlet>
+    <servlet-name>ColorServlet</servlet-name>
+    <servlet-class>ColorServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>ColorServlet</servlet-name>
+    <url-pattern>/color</url-pattern>
+</servlet-mapping>
+
+
+<!-- Fruit Servlet -->
+
+<servlet>
+    <servlet-name>FruitServlet</servlet-name>
+    <servlet-class>FruitServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>FruitServlet</servlet-name>
+    <url-pattern>/fruit</url-pattern>
+</servlet-mapping>
+
+<servlet>
+<servlet-name>CookieServlet</servlet-name>
+<servlet-class>CookieServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name>CookieServlet</servlet-name>
+<url-pattern>/cookie</url-pattern>
+</servlet-mapping>
+
+<servlet>
+<servlet-name>SessionServlet</servlet-name>
+<servlet-class>SessionServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name>SessionServlet</servlet-name>
+<url-pattern>/session</url-pattern>
+</servlet-mapping>
+
+</web-app>

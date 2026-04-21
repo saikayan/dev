@@ -1,0 +1,13 @@
+Install XAMPP
+Start:
+Apache
+MySQL
+Open:
+http://localhost/phpmyadmin
+
+→ Run SQL
+
+Save file:
+C:\xampp\htdocs\hospital.php
+Open:
+http://localhost/hospital.php

@@ -1,0 +1,220 @@
+Here’s a **complete, working PHP + MySQL project** for your PATIENT system. You can copy–paste and run it directly in **XAMPP**.
+
+---
+
+# 🗄️ 1. Create Database & Tables
+
+Go to `http://localhost/phpmyadmin` → SQL tab → run:
+
+```sql
+CREATE DATABASE hospital_db;
+USE hospital_db;
+
+CREATE TABLE PATIENT (
+    Pid INT PRIMARY KEY,
+    Pname VARCHAR(50),
+    DOB DATE,
+    ContactNo VARCHAR(15),
+    Address VARCHAR(100)
+);
+
+CREATE TABLE DIAGNOSIS (
+    Did INT PRIMARY KEY,
+    Dname VARCHAR(50),
+    Medication VARCHAR(100),
+    Department VARCHAR(50)
+);
+
+CREATE TABLE TREATMENT (
+    Pid INT,
+    Type VARCHAR(50),
+    Did INT,
+    DoctorName VARCHAR(50),
+    PRIMARY KEY (Pid, Did),
+    FOREIGN KEY (Pid) REFERENCES PATIENT(Pid) ON DELETE CASCADE,
+    FOREIGN KEY (Did) REFERENCES DIAGNOSIS(Did) ON DELETE CASCADE
+);
+```
+
+---
+
+# 📁 2. Create Project Folder
+
+Go to:
+
+```
+htdocs/
+```
+
+Create folder:
+
+```
+hospital_app
+```
+
+---
+
+# 📄 3. db.php (Database Connection)
+
+```php
+<?php
+$conn = new mysqli("localhost", "root", "", "hospital_db");
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+?>
+```
+
+---
+
+# 🌐 4. index.php (FULL WORKING CODE)
+
+```php
+<?php include 'db.php'; ?>
+
+<h2>Add Patient</h2>
+<form method="post">
+    Pid: <input type="number" name="pid"><br>
+    Name: <input type="text" name="pname"><br>
+    DOB: <input type="date" name="dob"><br>
+    Contact: <input type="text" name="contact"><br>
+    Address: <input type="text" name="address"><br>
+    <input type="submit" name="add_patient">
+</form>
+
+<h2>Add Diagnosis</h2>
+<form method="post">
+    Did: <input type="number" name="did"><br>
+    Name: <input type="text" name="dname"><br>
+    Medication: <input type="text" name="med"><br>
+    Department: <input type="text" name="dept"><br>
+    <input type="submit" name="add_diagnosis">
+</form>
+
+<h2>Assign Treatment</h2>
+<form method="post">
+    Patient ID: <input type="number" name="t_pid"><br>
+    Diagnosis ID: <input type="number" name="t_did"><br>
+    Type: <input type="text" name="type"><br>
+    Doctor Name: <input type="text" name="doctor"><br>
+    <input type="submit" name="assign_treatment">
+</form>
+
+<h2>Update Patient</h2>
+<form method="post">
+    Pid: <input type="number" name="u_pid"><br>
+    New Name: <input type="text" name="u_name"><br>
+    <input type="submit" name="update">
+</form>
+
+<h2>Delete Patient</h2>
+<form method="post">
+    Pid: <input type="number" name="d_pid"><br>
+    <input type="submit" name="delete">
+</form>
+
+<hr>
+
+<?php
+
+// ADD PATIENT
+if(isset($_POST['add_patient'])){
+    $sql = "INSERT INTO PATIENT VALUES(
+        $_POST[pid],
+        '$_POST[pname]',
+        '$_POST[dob]',
+        '$_POST[contact]',
+        '$_POST[address]'
+    )";
+
+    echo $conn->query($sql) ? "Patient Added<br>" : $conn->error;
+}
+
+// ADD DIAGNOSIS
+if(isset($_POST['add_diagnosis'])){
+    $sql = "INSERT INTO DIAGNOSIS VALUES(
+        $_POST[did],
+        '$_POST[dname]',
+        '$_POST[med]',
+        '$_POST[dept]'
+    )";
+
+    echo $conn->query($sql) ? "Diagnosis Added<br>" : $conn->error;
+}
+
+// ASSIGN TREATMENT
+if(isset($_POST['assign_treatment'])){
+    $sql = "INSERT INTO TREATMENT VALUES(
+        $_POST[t_pid],
+        '$_POST[type]',
+        $_POST[t_did],
+        '$_POST[doctor]'
+    )";
+
+    echo $conn->query($sql) ? "Treatment Assigned<br>" : $conn->error;
+}
+
+// UPDATE PATIENT
+if(isset($_POST['update'])){
+    $sql = "UPDATE PATIENT 
+            SET Pname='$_POST[u_name]' 
+            WHERE Pid=$_POST[u_pid]";
+
+    echo $conn->query($sql) ? "Patient Updated<br>" : $conn->error;
+}
+
+// DELETE PATIENT
+if(isset($_POST['delete'])){
+    $sql = "DELETE FROM PATIENT WHERE Pid=$_POST[d_pid]";
+
+    echo $conn->query($sql) ? "Patient Deleted<br>" : $conn->error;
+}
+
+?>
+```
+
+---
+
+# ▶️ 5. Run the Project
+
+1. Start **Apache + MySQL** in XAMPP
+2. Open browser:
+
+```
+http://localhost/hospital_app/index.php
+```
+
+---
+
+# ✅ What Works (All Required Operations)
+
+✔ Add Patient
+✔ Add Diagnosis
+✔ Assign Treatment
+✔ Update Patient
+✔ Delete Patient
+
+---
+
+# ⚠️ Important (for exams)
+
+* This is **fully working basic version**
+* For better marks, mention:
+
+  * Use **prepared statements** (security)
+  * Add **validation**
+  * Add **display tables (SELECT queries)**
+
+---
+
+# 🎯 If You Want Upgrade
+
+I can extend this into:
+
+* 📊 View patients in table
+* 🔍 Search patient
+* 🎨 Better UI
+* 🧾 Full mini-project report (ready to submit)
+
+Just tell me 👍
