@@ -1,0 +1,84 @@
+http://localhost:8080/ServletLab/hello
+http://localhost:8080/ServletLab/Welcome.html
+http://localhost:8080/ServletLab/EmployeeForm.html
+http://localhost:8080/ServletLab/Color.html
+http://localhost:8080/ServletLab/Fruits.html
+http://localhost:8080/ServletLab/CookieSelectLanguage.html
+http://localhost:8080/ServletLab/SessionSelectLanguage.html
+
+javac --release 17 -cp "C:\xamppp\tomcat\lib\servlet-api.jar" WelcomeServlet.java
+
+faqdb
+
+
+
+CREATE TABLE topics (
+topicID INT PRIMARY KEY AUTO_INCREMENT,
+topicName VARCHAR(100)
+);
+
+
+
+CREATE TABLE faq (
+id INT PRIMARY KEY AUTO_INCREMENT,
+topicID INT,
+question VARCHAR(255),
+answer VARCHAR(255),
+FOREIGN KEY (topicID) REFERENCES topics(topicID)
+);
+
+
+
+INSERT INTO topics(topicName) VALUES
+('Java'),
+('Servlet'),
+('Database');
+
+
+
+INSERT INTO faq(topicID,question,answer) VALUES
+(1,'What is Java?','Java is an object oriented programming language'),
+(2,'What is Servlet?','Servlet is a server side Java program'),
+(3,'What is JDBC?','JDBC connects Java programs with database');
+
+
+
+CREATE TABLE survey (
+animal VARCHAR(50) PRIMARY KEY,
+votes INT
+);
+
+
+
+INSERT INTO survey VALUES
+('Dog',0),
+('Cat',0),
+('Parrot',0),
+('Cow',0),
+('None',0);
+
+
+
+https://dev.mysql.com/downloads/connector/j/
+
+
+
+2. Copy the JAR
+Place it here:
+
+ 
+C:\xamppp\tomcat\lib
+ 
+Example:
+
+ 
+C:\xamppp\tomcat\lib\mysql-connector-j-8.3.0.jar
+ 
+3. Restart Tomcat
+Very important.
+
+Run:
+
+ 
+shutdown.bat
+startup.bat
