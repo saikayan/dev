@@ -1,0 +1,253 @@
+Here’s a much **simpler version** of Towers of Hanoi using HTML + JavaScript — no animation, just prints the steps.
+
+---
+
+## 📄 Simple Version (No Animation)
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Towers of Hanoi</title>
+</head>
+<body>
+
+<h2>Towers of Hanoi Solver</h2>
+
+<label>Enter number of disks:</label>
+<input type="number" id="disks" value="3">
+<button onclick="solveHanoi()">Solve</button>
+
+<pre id="output"></pre>
+
+<script>
+function hanoi(n, from, to, aux, result) {
+  if (n === 1) {
+    result.push("Move disk 1 from " + from + " to " + to);
+    return;
+  }
+
+  hanoi(n - 1, from, aux, to, result);
+  result.push("Move disk " + n + " from " + from + " to " + to);
+  hanoi(n - 1, aux, to, from, result);
+}
+
+function solveHanoi() {
+  let n = parseInt(document.getElementById("disks").value);
+  let result = [];
+
+  hanoi(n, "A", "C", "B", result);
+
+  document.getElementById("output").textContent = result.join("\n");
+}
+</script>
+
+</body>
+</html>
+```
+
+---
+
+## 🧠 What this does
+
+* Takes number of disks as input
+* Uses **recursion** to compute moves
+* Prints steps like:
+
+  ```
+  Move disk 1 from A to C
+  Move disk 2 from A to B
+  Move disk 1 from C to B
+  ...
+  ```
+
+---
+
+## 👍 Why this is simpler
+
+* No animation or DOM manipulation
+* Just logic + output
+* Easy to understand recursion flow
+
+---
+
+If you want an even simpler version (like just JavaScript without HTML, or iterative solution), tell me 👍
+
+
+Here’s a clean, working example of the **Towers of Hanoi visualizer** using HTML + JavaScript. It shows the rods and animates the solution step-by-step.
+
+---
+
+## ✅ Features
+
+* Adjustable number of disks
+* Visual animation of moves
+* Recursive solution logic
+
+---
+
+## 📄 Full Code (HTML + JS)
+
+Save this as `hanoi.html` and open it in a browser:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Towers of Hanoi</title>
+<style>
+  body {
+    font-family: Arial;
+    text-align: center;
+    background: #f4f4f4;
+  }
+
+  .container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+  }
+
+  .tower {
+    width: 120px;
+    height: 250px;
+    border: 2px solid #333;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    padding: 10px;
+    background: #fff;
+  }
+
+  .disk {
+    height: 20px;
+    margin: 2px 0;
+    background: steelblue;
+    border-radius: 4px;
+  }
+
+  button, input {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 16px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Towers of Hanoi</h1>
+
+<label>Number of disks: </label>
+<input type="number" id="numDisks" value="3" min="1" max="6">
+<br>
+<button onclick="start()">Start</button>
+
+<div class="container">
+  <div class="tower" id="A"></div>
+  <div class="tower" id="B"></div>
+  <div class="tower" id="C"></div>
+</div>
+
+<script>
+let towers = {
+  A: [],
+  B: [],
+  C: []
+};
+
+let moves = [];
+let delay = 500;
+
+function createDisks(n) {
+  towers.A = [];
+  towers.B = [];
+  towers.C = [];
+
+  for (let i = n; i >= 1; i--) {
+    towers.A.push(i);
+  }
+
+  render();
+}
+
+function render() {
+  ["A", "B", "C"].forEach(t => {
+    let towerDiv = document.getElementById(t);
+    towerDiv.innerHTML = "";
+
+    towers[t].forEach(size => {
+      let disk = document.createElement("div");
+      disk.className = "disk";
+      disk.style.width = (size * 20) + "px";
+      towerDiv.appendChild(disk);
+    });
+  });
+}
+
+function moveDisk(from, to) {
+  let disk = towers[from].pop();
+  towers[to].push(disk);
+  render();
+}
+
+function hanoi(n, from, to, aux) {
+  if (n === 1) {
+    moves.push([from, to]);
+    return;
+  }
+  hanoi(n - 1, from, aux, to);
+  moves.push([from, to]);
+  hanoi(n - 1, aux, to, from);
+}
+
+function animate() {
+  if (moves.length === 0) return;
+
+  let [from, to] = moves.shift();
+  moveDisk(from, to);
+
+  setTimeout(animate, delay);
+}
+
+function start() {
+  let n = parseInt(document.getElementById("numDisks").value);
+  moves = [];
+  createDisks(n);
+  hanoi(n, "A", "C", "B");
+  animate();
+}
+</script>
+
+</body>
+</html>
+```
+
+---
+
+## 🧠 How It Works
+
+* Uses **recursion** to generate moves:
+
+  * Move `n-1` disks to auxiliary rod
+  * Move largest disk
+  * Move `n-1` disks to destination
+* Stores moves in an array, then animates them
+* DOM updates render the towers visually
+
+---
+
+## 💡 Ideas to Improve
+
+* Add speed control slider
+* Show move counter
+* Add drag-and-drop manual mode
+* Highlight current move
+
+---
+
+If you want, I can convert this into:
+
+* React version ⚛️
+* Canvas animation 🎮
+* Step-by-step manual solver 🧩
